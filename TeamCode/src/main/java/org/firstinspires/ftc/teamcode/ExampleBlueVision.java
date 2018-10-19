@@ -54,7 +54,7 @@ public class ExampleBlueVision extends OpenCVPipeline {
     // this is just here so we can expose it later thru getContours.
     private List<MatOfPoint> contours = new ArrayList<>();
 
-    public synchronized void setShowCountours(boolean enabled) {
+    public synchronized void setShowContours(boolean enabled) {
         showContours = enabled;
     }
     public synchronized List<MatOfPoint> getContours() {
@@ -69,7 +69,7 @@ public class ExampleBlueVision extends OpenCVPipeline {
         // Then, we threshold our hsv image so that we get a black/white binary image where white
         // is the blues listed in the specified range of values
         // you can use a program like WPILib GRIP to find these values, or just play around.
-        Core.inRange(hsv, new Scalar(90, 128, 30), new Scalar(170, 255, 255), thresholded);
+        Core.inRange(hsv, new Scalar(15, 100, 64), new Scalar(50, 255, 160), thresholded);
 
         // we blur the thresholded image to remove noise
         // there are other types of blur like box blur or gaussian which can be explored.
@@ -86,8 +86,9 @@ public class ExampleBlueVision extends OpenCVPipeline {
         if (showContours) {
             // this draws the outlines of the blue contours over our original image.
             // they are highlighted in green.
-            Imgproc.drawContours(rgba, contours, -1, new Scalar(0, 255, 0), 2, 8);
+
         }
+        Imgproc.drawContours(rgba, contours, -1, new Scalar(0, 255, 0), 2, 8);
 
         return rgba; // display the image seen by the camera
     }

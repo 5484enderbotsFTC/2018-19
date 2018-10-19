@@ -53,7 +53,7 @@ public class ExampleBlueVisionDemo extends OpMode {
         blueVision = new ExampleBlueVision();
         // can replace with ActivityViewDisplay.getInstance() for fullscreen
         blueVision.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
-        blueVision.setShowCountours(false);
+        blueVision.setShowContours(false);
         // start the vision system
         blueVision.enable();
     }
@@ -61,8 +61,8 @@ public class ExampleBlueVisionDemo extends OpMode {
     @Override
     public void loop() {
         // update the settings of the vision pipeline
-        blueVision.setShowCountours(gamepad1.x);
-
+        // blueVision.setShowContours(gamepad1.x);
+        blueVision.setShowContours(true);
         // get a list of contours from the vision system
         List<MatOfPoint> contours = blueVision.getContours();
         for (int i = 0; i < contours.size(); i++) {
