@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Avery on 10/26/18.
+ * Created by Ted on 10/27/18.
  */
-@Autonomous (name = "CloseAutoV0")
-public class CloseAutoV0 extends LinearOpMode {
+@Autonomous (name = "FarAutoV0")
+public class FarAutoV0 extends LinearOpMode {
     DcMotor mtrFl;
     DcMotor mtrBl;
     DcMotor mtrFr;
@@ -21,7 +21,7 @@ public class CloseAutoV0 extends LinearOpMode {
     double DOWN = 1;
     double UP = 0;
     double IN = 0;
-@Override
+    @Override
     public void runOpMode(){
     mtrBl = hardwareMap.dcMotor.get("mtrBl");
     mtrBr = hardwareMap.dcMotor.get("mtrBr");
@@ -33,17 +33,19 @@ public class CloseAutoV0 extends LinearOpMode {
     waitForStart();
     DrivePower(-1, 0);
     sleep(800);
-    DrivePower(0,0);
-    svoRotate.setPosition(UP);
+    svoRotate.setPosition(DOWN);
     DrivePower(1, 0);
     sleep(700);
     DrivePower(-1, 0);
+    sleep(900);
+    DrivePower(0,-1);
+    sleep(500);
+    DrivePower(-1,0);
+    sleep(1000);
+    DrivePower(0,-1);
+    sleep(1000);
+    DrivePower(-1,0);
     sleep(1500);
-    DrivePower(0,0);
-    mtrCollect.setPower(1);
-    DrivePower(0.4, 0);
-    sleep(2000);
-    mtrCollect.setPower(0);
     DrivePower(0,0);
 
 }

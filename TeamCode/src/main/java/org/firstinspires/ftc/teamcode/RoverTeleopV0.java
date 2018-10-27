@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.util.Encoder;
 
 /**
  * Created by Avery on 10/24/18.
@@ -23,12 +20,12 @@ public class RoverTeleopV0 extends OpMode {
     Servo svoExtend;
     Servo svoRotate;
 
-    double DOWN = 1;
-    double UP = 0;
+    double UP = 1;
+    double DOWN = 0;
     double IN = 0;
 
     @Override
-    public void init(){
+    public void init() {
         mtrBl = hardwareMap.dcMotor.get("mtrBl");
         mtrBr = hardwareMap.dcMotor.get("mtrBr");
         mtrFr = hardwareMap.dcMotor.get("mtrFr");
@@ -37,10 +34,12 @@ public class RoverTeleopV0 extends OpMode {
         svoExtend = hardwareMap.servo.get("svoExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
     }
-    public void start(){
+
+    public void start() {
         svoExtend.setPosition(IN);
     }
-    public void loop(){
+
+    public void loop() {
         double X = gamepad1.left_stick_y;
         double Y = gamepad1.right_stick_x;
         double leftPower = X - Y;
@@ -50,17 +49,28 @@ public class RoverTeleopV0 extends OpMode {
         mtrFl.setPower(leftPower);
         mtrFr.setPower(rightPower);
 
-        if (gamepad1.dpad_down){svoRotate.setPosition(DOWN);}
-        else if(gamepad1.dpad_up){svoRotate.setPosition(UP);}
+        if (gamepad1.dpad_down) {svoRotate.setPosition(UP);}
+        else if (gamepad1.dpad_up) {svoRotate.setPosition(DOWN);}
 
-        if (gamepad1.left_trigger>0.5){svoExtend.setPosition(svoExtend.getPosition()+0.2);}
-        else if(gamepad1.left_bumper){svoExtend.setPosition(svoExtend.getPosition()-0.2);}
+        if (gamepad1.left_trigger > 0.5) {
+            incrementsvo(svoExtend, 0.2);
+        } else if (gamepad1.left_bumper) {
+            incrementsvo(svoExtend, -0.2);
+        }
 
-        if(gamepad1.right_trigger>0.5){mtrCollect.setPower(1);}
-        else if(gamepad1.right_bumper){mtrCollect.setPower(-1);}
-        else{mtrCollect.setPower(0);}
+        if (gamepad1.right_trigger > 0.5) {
+            mtrCollect.setPower(1);
+        } else if (gamepad1.right_bumper) {
+            mtrCollect.setPower(-1);
+        } else {
+            mtrCollect.setPower(0);
+        }
     }
-    public void stop(){
 
+    public void stop() {
+
+    }
+    public void incrementsvo(Servo svo, double change) {
+        svo.setPosition(svo.getPosition() + change);
     }
 }
