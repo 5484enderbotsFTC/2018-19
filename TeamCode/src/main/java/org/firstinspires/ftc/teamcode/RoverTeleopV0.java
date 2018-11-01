@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
+
 
 /**
  * Created by Avery on 10/24/18.
@@ -12,13 +14,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 @TeleOp(name="RoverRuckV0", group="K9bot")
 public class RoverTeleopV0 extends OpMode {
-    DcMotor mtrFl;
-    DcMotor mtrBl;
-    DcMotor mtrFr;
-    DcMotor mtrBr;
     DcMotor mtrCollect;
     Servo svoExtend;
     Servo svoRotate;
+    DriveBase DriveBase;
 
     double UP = 1;
     double DOWN = 0;
@@ -26,13 +25,10 @@ public class RoverTeleopV0 extends OpMode {
 
     @Override
     public void init() {
-        mtrBl = hardwareMap.dcMotor.get("mtrBl");
-        mtrBr = hardwareMap.dcMotor.get("mtrBr");
-        mtrFr = hardwareMap.dcMotor.get("mtrFr");
-        mtrFl = hardwareMap.dcMotor.get("mtrFl");
         mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
         svoExtend = hardwareMap.servo.get("svoExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
+        DriveBase = new DriveBase(hardwareMap,false);
     }
 
     public void start() {
@@ -42,12 +38,7 @@ public class RoverTeleopV0 extends OpMode {
     public void loop() {
         double X = gamepad1.left_stick_y;
         double Y = gamepad1.right_stick_x;
-        double leftPower = X - Y;
-        double rightPower = X + Y;
-        mtrBl.setPower(leftPower);
-        mtrBr.setPower(rightPower);
-        mtrFl.setPower(leftPower);
-        mtrFr.setPower(rightPower);
+        DriveBase.drive(X,Y);
 
         if (gamepad1.dpad_down) {svoRotate.setPosition(UP);}
         else if (gamepad1.dpad_up) {svoRotate.setPosition(DOWN);}
