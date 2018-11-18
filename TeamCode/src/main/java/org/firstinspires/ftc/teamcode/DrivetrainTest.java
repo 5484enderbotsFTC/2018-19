@@ -32,17 +32,20 @@ public class DrivetrainTest extends LinearOpMode {
         appendLog("dab");
         mtrBL.setPower(1);
         mtrBR.setPower(1);
+        mtrFL.setPower(1);
+        mtrFR.setPower(1);
         float t;
         for (int i=0;i<11;i++){
-            t=i/2;
+            t=(float)i/2;
 
-            appendLog("time:");
-            appendLog(t.toString());
-            appendLog(encFL.getEncValue().toString());
+            appendLog("time:"+String.valueOf(t));
+            appendLog("encoder value:"+String.valueOf(encFL.getEncValue()));
             sleep(500);
         }
-        mtrBL.setPower(1);
-        mtrBR.setPower(1);
+        mtrBL.setPower(0);
+        mtrBR.setPower(0);
+        mtrFL.setPower(0);
+        mtrFR.setPower(0);
     }
 
 
@@ -57,7 +60,7 @@ public class DrivetrainTest extends LinearOpMode {
 
     public void appendLog(String text)
     {
-        File logFile = new File("sdcard/log.file");
+        File logFile = new File("sdcard/log.log");
         if (!logFile.exists())
         {
             try
