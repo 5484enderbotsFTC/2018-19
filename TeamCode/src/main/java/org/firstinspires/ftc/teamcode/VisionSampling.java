@@ -74,7 +74,7 @@ public class VisionSampling extends OpMode {
                     String.format(Locale.getDefault(), "(%d, %d)", (boundingRect.x + boundingRect.width) / 2, (boundingRect.y + boundingRect.height) / 2));
         }
     }
-
+    //sadsadsadsa
     public void stop() {
         // stop the vision system
         blueVision.disable();
