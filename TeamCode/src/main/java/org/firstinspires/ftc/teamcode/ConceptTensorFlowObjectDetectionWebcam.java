@@ -29,9 +29,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import android.util.Log;
+
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.vuforia.CameraDevice;
+
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -50,7 +54,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * is explained below.
  */
 @TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
-@Disabled
 public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -68,7 +71,8 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * Once you've obtained a license key, copy the string from the Vuforia web site
      * and paste it in to your code on the next line, between the double quotes.
      */
-    private static final String VUFORIA_KEY = " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+    private static final String VUFORIA_KEY =
+            "AaykDuL/////AAABmRi+UFZ1dkWHuI8mpO65odVhF2E+c0UeNeYto6BUgRANzX6RVu2pIac0ONKNt3qLSkBp800RXcnJHq872Hc56F4RL2r9syzf3UGr3qi/q7EpodafX76lIwKQ95sJH4Vl7Ai/5qU0qv93CjK6igT05PA/3edAdXgPy7WM9GgHRlhYCaGxD91dagW9svqOWCEAYd+7uqsNv7ROqoZIsQGJ38BDzbQK39bszo5kmU5zqbAcW6oO91NuQn5IlbiFgNEU7lhRX0hhBuel2CufJHb2L8wtAS/L48Sp/gWsaLPmbNoHT8+Ma1DYQSXXic6NtZR7iGPmmKmmt3N39UjYTROlLznmN2qpfH4ZHWK172qDpble";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -87,6 +91,13 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
+        boolean focusModeSet = CameraDevice.getInstance().setFocusMode(
+                CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO);
+
+        if (!focusModeSet) {
+            Log.d("Sample Log Tag", "Failed to set focus mode (unsupported mode).");
+        }
+
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
