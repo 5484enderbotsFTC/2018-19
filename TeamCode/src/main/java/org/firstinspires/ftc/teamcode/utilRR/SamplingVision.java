@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.utilRR;
 
 import android.util.Log;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.vuforia.CameraDevice;
 
 import java.util.List;
@@ -19,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 public class SamplingVision {
     private int mineralPos = 1;
+    private HardwareMap hardwareMap;
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
@@ -39,10 +39,10 @@ public class SamplingVision {
 
     boolean focusModeSet;
 
-    public SamplingVision(hardwareMap webcam){
+    public SamplingVision(HardwareMap hardwareMap){
         initVuforia();
         initTfod();
-        this.
+        this.hardwareMap = hardwareMap;
 
         this.focusModeSet = CameraDevice.getInstance().setFocusMode(
                 CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO);
