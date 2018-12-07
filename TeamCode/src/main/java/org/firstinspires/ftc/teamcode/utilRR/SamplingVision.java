@@ -12,8 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-//hardwareMap.get(WebcamName.class, "Webcam 1");
-//hardwareMap.appContext
+
 
 
 public class SamplingVision {
@@ -40,9 +39,10 @@ public class SamplingVision {
     boolean focusModeSet;
 
     public SamplingVision(HardwareMap hardwareMap){
+        this.hardwareMap = hardwareMap;
+
         initVuforia();
         initTfod();
-        this.hardwareMap = hardwareMap;
 
         this.focusModeSet = CameraDevice.getInstance().setFocusMode(
                 CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO);
@@ -77,11 +77,11 @@ public class SamplingVision {
                 }
                 if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                     if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                        mineralPos = 0;
+                        mineralPos = 0; //left
                     } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                        mineralPos = 1;
+                        mineralPos = 2; //right
                     } else {
-                        mineralPos = 2;
+                        mineralPos = 1; //centre
                     }
                 }
             }
