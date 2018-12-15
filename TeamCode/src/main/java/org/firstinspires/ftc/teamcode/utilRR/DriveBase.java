@@ -66,6 +66,16 @@ public class DriveBase {
         mtrBR.setPower(rightPower);
         mtrFR.setPower(rightPower);
     }
+
+    public void driveEncoder(double count){
+        resetEncoders();
+        drive(1,0);
+        while (encFL.getEncValue()<count){
+
+        }
+        drive(0,0);
+    }
+
     public void turnInPlace(double rotation){
         resetGyro();
         double leftPower = Integer.signum((int)rotation);
@@ -78,8 +88,8 @@ public class DriveBase {
 
         }
         drive(0,0);
-
     }
+
 
     private void initIMU() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
