@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.utilRR;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -15,6 +14,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.util.Arrays;
+
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by guinea on 11/5/17.
@@ -29,7 +31,7 @@ public class DriveBase {
     public Encoder encBL;
     public Encoder encBR;
     public BNO055IMU snsImu;
-    HardwareMap hardwareMap;
+    private HardwareMap hardwareMap;
 
     double offset = 0;
     final double K_P = 0.01;
@@ -62,9 +64,8 @@ public class DriveBase {
 
     public void driveEncoder(double count){
         resetEncoders();
-        drive(1,0);
         while (encFL.getEncValue()<count){
-
+            drive(1,0);
         }
         drive(0,0);
     }
@@ -73,10 +74,9 @@ public class DriveBase {
         resetGyro();
         double leftPower = Integer.signum((int)rotation);
         double rightPower = Integer.signum((int)rotation);
-        mtrL.setPower(leftPower);
-        mtrR.setPower(rightPower);
         while (Math.abs(getAngle())<Math.abs(rotation)){
-
+            mtrL.setPower(leftPower);
+            mtrR.setPower(rightPower);
         }
         drive(0,0);
     }

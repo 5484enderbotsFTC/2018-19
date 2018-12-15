@@ -7,6 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
+import org.firstinspires.ftc.teamcode.utilRR.Encoder;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * Created by Sarahpambi76 on 12/10/18.
@@ -23,8 +27,9 @@ public class RochesterTeleOp extends OpMode {
     TouchSensor limHangLow;
     TouchSensor limHangHigh;
     Servo svoTape;
+    Encoder encHang;
 
-    double svopos = 0;
+    double posSvo = 0;
     double UPWARD = 0;
     double DOWNWARD = 1;
     double IN = -1;
@@ -46,7 +51,7 @@ public class RochesterTeleOp extends OpMode {
         //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
         //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
         svoTape = hardwareMap.servo.get("svoTape");
-
+        encHang = new Encoder(mtrCollect);
     }
 
     public void start() {
@@ -73,16 +78,20 @@ public class RochesterTeleOp extends OpMode {
         //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
         //else if(gamepad1.dpad_left){svoRotate.setPosition(SETPOSITION);}
         //else if(gamepad1.dpad_right){svoRotate.setPosition(SETPOSITION);}
-        if (gamepad1.dpad_up){svopos+=0.005;}
-        if (gamepad1.dpad_down){svopos+=-0.005;}
-        svoTape.setPosition(svopos);
+        if (gamepad1.dpad_up){posSvo =min(posSvo +0.005,1);}
+        if (gamepad1.dpad_down){posSvo =max(posSvo -0.005,0);}
+        svoRotate.setPosition(posSvo);
+        telemetry.addData("pos", posSvo);
+
+        //if (gamepad1.dpad_left){svoHang.setPosition(0);}
+        //if (gamepad1.dpad_right){svoHang.setPosition(1);}
+        //telemetry.addData("hang pos", encHang.getEncValue());
 
         if(gamepad1.right_trigger>0.5){svoCollect.setPosition(COLLECT);}
         else if(gamepad1.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
         else{svoCollect.setPosition(.5);}
 
         if(gamepad2.a){driveBase.turnInPlace(180);}
-        telemetry.addData("pos",svopos);
         telemetry.update();
     }
 
