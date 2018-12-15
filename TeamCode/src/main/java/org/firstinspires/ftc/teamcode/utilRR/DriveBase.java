@@ -1,7 +1,6 @@
 
 package org.firstinspires.ftc.teamcode.utilRR;
 
-import android.graphics.YuvImage;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -31,7 +30,7 @@ public class DriveBase {
     public Encoder encFR;
     public Encoder encBL;
     public Encoder encBR;
-    //    BNO055IMU snsImu;
+    public BNO055IMU snsImu;
     HardwareMap hardwareMap;
 
     double offset = 0;
@@ -43,32 +42,43 @@ public class DriveBase {
         mtrFL = hardwareMap.dcMotor.get("mtrFl");
         mtrFR = hardwareMap.dcMotor.get("mtrFr");
 
-        /*mtrFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         mtrFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         mtrBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+        mtrBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*encFL = new Encoder(mtrFL);
+        encFL = new Encoder(mtrFL);
         encFR = new Encoder(mtrFL);
         encBL = new Encoder(mtrFL);
         encBR = new Encoder(mtrFL);
-        */
 
-//        if (useIMU) {
-//            snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
-//            if (calibrate)
-//                initIMU();
-//        } else {
-//        }
+        snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
+        if (calibrate)
+            initIMU();
+
 
     }
     public void drive(double X, double Y){
         double leftPower = X - Y;
         double rightPower = X + Y;
         mtrBL.setPower(leftPower);
-        mtrBR.setPower(rightPower);
         mtrFL.setPower(leftPower);
+        mtrBR.setPower(rightPower);
         mtrFR.setPower(rightPower);
+    }
+    public void turnInPlace(double rotation){
+        resetGyro();
+        double leftPower = Integer.signum((int)rotation);
+        double rightPower = Integer.signum((int)rotation);
+        mtrBL.setPower(leftPower);
+        mtrFL.setPower(leftPower);
+        mtrBR.setPower(rightPower);
+        mtrFR.setPower(rightPower);
+        while (Math.abs(getAngle())<Math.abs(rotation)){
+
+        }
+        drive(0,0);
+
     }
 
     private void initIMU() {
@@ -83,23 +93,22 @@ public class DriveBase {
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
-//        snsImu.initialize(parameters);
+        snsImu.initialize(parameters);
     }
 
     public double getAngle() {
-//        if (snsImu != null) {
-//            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset;
-//        } else {
+        if (snsImu != null) {
+            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle - offset;
+        } else {
         return 0;
-//        }
+        }
     }
 
     public void resetGyro() {
-//        if (snsImu != null) {
-//            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-//        } else {
-
-//        }
+        if (snsImu != null) {
+            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle;
+        } else {
+        }
     }
 
     public void resetDrive() {

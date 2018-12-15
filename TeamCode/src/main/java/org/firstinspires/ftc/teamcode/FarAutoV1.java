@@ -4,41 +4,45 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 
 /**
- * Created by Avery on 10/26/18.
+ * Created by Ted on 10/27/18.
  */
-@Autonomous (name = "NearAutoV0")
-public class NearAutoV0 extends LinearOpMode {
+@Autonomous (name = "FarAutoV0")
+public class FarAutoV1 extends LinearOpMode {
+    DriveBase DriveBase;
     DcMotor mtrCollect;
     Servo svoExtend;
     Servo svoRotate;
-    DriveBase driveBase;
 
     double DOWN = 1;
     double UP = 0;
     double IN = 0;
-@Override
+    @Override
     public void runOpMode(){
-    driveBase = new DriveBase(hardwareMap,false);
+    DriveBase = new DriveBase(hardwareMap,false);
     mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
     svoExtend = hardwareMap.servo.get("svoExtend");
     svoRotate = hardwareMap.servo.get("svoRotate");
     waitForStart();
-    driveBase.drive(-1, 0);
+    DriveBase.drive(-1, 0);
     sleep(800);
     svoRotate.setPosition(DOWN);
-    driveBase.drive(1, 0);
+    DriveBase.drive(1, 0);
     sleep(700);
-    driveBase.drive(-1, 0);
+    DriveBase.drive(-1, 0);
+    sleep(900);
+    DriveBase.drive(0,-1);
+    sleep(500);
+    DriveBase.drive(-1,0);
+    sleep(1000);
+    DriveBase.drive(0, -1);
+    sleep(1000);
+    DriveBase.drive(-1,0);
     sleep(1500);
-    driveBase.drive(0,0);
-    mtrCollect.setPower(1);
-    driveBase.drive(0.4, 0);
-    sleep(2000);
-    mtrCollect.setPower(0);
-    driveBase.drive(0,0);
+    DriveBase.drive(0,0);
 
 }
 }
