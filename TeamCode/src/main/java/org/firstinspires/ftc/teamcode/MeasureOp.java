@@ -53,7 +53,7 @@ public class MeasureOp extends OpMode {
         double Y = gamepad1.left_stick_y;
         double X = gamepad1.right_stick_x;
 
-        driveBase.drive(X,Y);
+        driveBase.drive(Y, X);
         if (gamepad1.dpad_up){posSvo =min(posSvo +0.005,1);}
         if (gamepad1.dpad_down){posSvo =max(posSvo -0.005,0);}
         svoRotate.setPosition(posSvo);

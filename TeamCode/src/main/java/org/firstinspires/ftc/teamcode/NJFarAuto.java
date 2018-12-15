@@ -26,22 +26,22 @@ public class NJFarAuto extends LinearOpMode {
     svoExtend = hardwareMap.servo.get("svoExtend");
     svoRotate = hardwareMap.servo.get("svoRotate");
     waitForStart();
-    DriveBase.drive(-1, 0);
+    DriveBase.drive(0, -1);
     sleep(800);
     svoRotate.setPosition(DOWN);
-    DriveBase.drive(1, 0);
+    DriveBase.drive(0, 1);
     sleep(700);
-    DriveBase.drive(-1, 0);
+    DriveBase.drive(0, -1);
     sleep(900);
-    DriveBase.drive(0,-1);
+    DriveBase.drive(-1, 0);
     sleep(500);
-    DriveBase.drive(-1,0);
-    sleep(1000);
     DriveBase.drive(0, -1);
     sleep(1000);
-    DriveBase.drive(-1,0);
+    DriveBase.drive(-1, 0);
+    sleep(1000);
+    DriveBase.drive(0, -1);
     sleep(1500);
-    DriveBase.drive(0,0);
+    DriveBase.drive(0, 0);
 
 }
 }

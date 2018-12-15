@@ -11,9 +11,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
 
@@ -55,9 +52,9 @@ public class DriveBase {
 
 
     }
-    public void drive(double X, double Y){
-        double leftPower = -X - Y;
-        double rightPower = -X + Y;
+    public void drive(double Y, double X){
+        double leftPower = -Y + X;
+        double rightPower = Y + X;
         mtrL.setPower(leftPower);
         mtrR.setPower(rightPower);
     }
@@ -65,9 +62,9 @@ public class DriveBase {
     public void driveEncoder(double count){
         resetEncoders();
         while (encFL.getEncValue()<count){
-            drive(1,0);
+            drive(0, 1);
         }
-        drive(0,0);
+        drive(0, 0);
     }
 
     public void turnInPlace(double rotation){
@@ -78,7 +75,7 @@ public class DriveBase {
             mtrL.setPower(leftPower);
             mtrR.setPower(rightPower);
         }
-        drive(0,0);
+        drive(0, 0);
     }
 
 

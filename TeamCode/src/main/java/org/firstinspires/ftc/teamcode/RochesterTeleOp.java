@@ -62,7 +62,7 @@ public class RochesterTeleOp extends OpMode {
         double Y = -gamepad1.left_stick_y;
         double X = gamepad1.right_stick_x;
 
-        driveBase.drive(X,Y);
+        driveBase.drive(Y, X);
 
         if(gamepad2.dpad_up){
             svoHang.setPosition(UPWARD);}

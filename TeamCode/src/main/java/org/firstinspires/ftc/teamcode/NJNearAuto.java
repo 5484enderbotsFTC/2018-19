@@ -26,19 +26,19 @@ public class NJNearAuto extends LinearOpMode {
     svoExtend = hardwareMap.servo.get("svoExtend");
     svoRotate = hardwareMap.servo.get("svoRotate");
     waitForStart();
-    driveBase.drive(-1, 0);
+    driveBase.drive(0, -1);
     sleep(800);
     svoRotate.setPosition(DOWN);
-    driveBase.drive(1, 0);
+    driveBase.drive(0, 1);
     sleep(700);
-    driveBase.drive(-1, 0);
+    driveBase.drive(0, -1);
     sleep(1500);
-    driveBase.drive(0,0);
+    driveBase.drive(0, 0);
     mtrCollect.setPower(1);
-    driveBase.drive(0.4, 0);
+    driveBase.drive(0, 0.4);
     sleep(2000);
     mtrCollect.setPower(0);
-    driveBase.drive(0,0);
+    driveBase.drive(0, 0);
 
 }
 }
