@@ -15,8 +15,8 @@ import static java.lang.Math.min;
 /**
  * Created by Sarahpambi76 on 12/10/18.
  */
-@TeleOp (name="RochesterTeleOp", group="K9bot")
-public class RochesterTeleOp extends OpMode {
+@TeleOp (name="MeasureOp", group="K9bot")
+public class MeasureOp extends OpMode {
 
 
     Servo svoHang;
@@ -31,15 +31,6 @@ public class RochesterTeleOp extends OpMode {
 
     double posSvo = 0;
     double posTape = 0;
-    static double UPWARD = 0;
-    static double DOWNWARD = 1;
-    static double IN = -1;
-    static double OUT = 1;
-    double DPOSITION = 0.55;
-    double CPOSITION = 0.45;
-    double SETPOSITION = 0.5;
-    static double COLLECT = 1;
-    static double REVERSECOLLECT = 0;
 
 
     @Override
@@ -63,34 +54,19 @@ public class RochesterTeleOp extends OpMode {
         double X = gamepad1.right_stick_x;
 
         driveBase.drive(X,Y);
-
-        if(gamepad2.dpad_up){
-            svoHang.setPosition(UPWARD);}
-        else if(gamepad2.dpad_down){
-            svoHang.setPosition(DOWNWARD);}
-        else{
-            svoHang.setPosition(0.5);}
-
-        if(gamepad1.left_trigger>0.5){mtrCollect.setPower(OUT);}
-        else if(gamepad1.left_bumper){mtrCollect.setPower(IN);}
-        else {mtrCollect.setPower(0);}
-
-        //if(gamepad1.dpad_up){svoRotate.setPosition(CPOSITION);}
-        //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
-        //else if(gamepad1.dpad_left){svoRotate.setPosition(SETPOSITION);}
-        //else if(gamepad1.dpad_right){svoRotate.setPosition(SETPOSITION);}
-        if (gamepad1.dpad_up){posSvo=0;
-        } else if (gamepad1.dpad_down){posSvo=0.635;} else {posSvo=0.235;}
+        if (gamepad1.dpad_up){posSvo =min(posSvo +0.005,1);}
+        if (gamepad1.dpad_down){posSvo =max(posSvo -0.005,0);}
         svoRotate.setPosition(posSvo);
         telemetry.addData("pos", posSvo);
+
+        if (gamepad1.dpad_up){posTape =min(posTape +0.005,1);}
+        if (gamepad1.dpad_down){posTape =max(posTape -0.005,0);}
+        svoTape.setPosition(posTape);
+        telemetry.addData("tape pos", posTape);
 
         //if (gamepad1.dpad_left){svoHang.setPosition(0);}
         //if (gamepad1.dpad_right){svoHang.setPosition(1);}
         //telemetry.addData("hang pos", encHang.getEncValue());
-
-        if(gamepad1.right_trigger>0.5){svoCollect.setPosition(COLLECT);}
-        else if(gamepad1.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
-        else{svoCollect.setPosition(.5);}
 
         if(gamepad2.a){driveBase.turnInPlace(180);}
         telemetry.update();
