@@ -56,8 +56,8 @@ public class DriveBase {
 
     }
     public void drive(double X, double Y){
-        double leftPower = X + Y;
-        double rightPower = X - Y;
+        double leftPower = -X - Y;
+        double rightPower = -X + Y;
         mtrL.setPower(leftPower);
         mtrR.setPower(rightPower);
     }

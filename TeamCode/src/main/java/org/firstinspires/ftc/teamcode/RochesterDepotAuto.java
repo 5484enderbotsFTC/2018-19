@@ -45,7 +45,9 @@ public class RochesterDepotAuto extends LinearOpMode {
 //    }
     svoHang.setPosition(0.5);
     //driveBase.driveEncoder(300);
-
+    driveBase.drive(0,1);
+    sleep(1000);
+    driveBase.drive(0,0);
 
 //    while (limHangLow.getState()){
       //  svoHang.setPosition(DOWN);

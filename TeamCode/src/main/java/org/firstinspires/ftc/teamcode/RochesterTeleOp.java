@@ -59,7 +59,7 @@ public class RochesterTeleOp extends OpMode {
     }
 
     public void loop() {
-        double Y = gamepad1.left_stick_y;
+        double Y = -gamepad1.left_stick_y;
         double X = gamepad1.right_stick_x;
 
         driveBase.drive(X,Y);
@@ -79,8 +79,7 @@ public class RochesterTeleOp extends OpMode {
         //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
         //else if(gamepad1.dpad_left){svoRotate.setPosition(SETPOSITION);}
         //else if(gamepad1.dpad_right){svoRotate.setPosition(SETPOSITION);}
-        if (gamepad1.dpad_up){posSvo=0;
-        } else if (gamepad1.dpad_down){posSvo=0.635;} else {posSvo=0.235;}
+        if (gamepad1.dpad_up){posSvo=0.635;} else if (gamepad1.dpad_down){posSvo=0;} else if (gamepad1.dpad_left||gamepad1.dpad_right) {posSvo=0.235;}
         svoRotate.setPosition(posSvo);
         telemetry.addData("pos", posSvo);
 
