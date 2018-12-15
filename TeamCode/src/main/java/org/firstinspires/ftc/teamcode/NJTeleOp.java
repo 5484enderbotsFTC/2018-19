@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
-@TeleOp(name="RoverRuckV1", group="K9bot")
-public class RoverTeleopV1 extends OpMode{
+@TeleOp(name="NJTeleOp", group="K9bot")
+public class NJTeleOp extends OpMode{
     org.firstinspires.ftc.teamcode.utilRR.DriveBase DriveBase;
 
 

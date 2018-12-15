@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 /**
  * Created by Sarahpambi76 on 12/10/18.
  */
-@TeleOp (name="SarahRoverTeleop", group="K9bot")
-public class SarahRoverTeleop extends OpMode {
+@TeleOp (name="RochesterTeleOp", group="K9bot")
+public class RochesterTeleOp extends OpMode {
 
 
     DcMotor mtrHang;

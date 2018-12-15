@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 /**
  * Created by Avery on 10/26/18.
  */
-@Autonomous (name = "NearAutoV0")
-public class NearAutoV0 extends LinearOpMode {
+@Autonomous (name = "NJNearAuto")
+public class NJNearAuto extends LinearOpMode {
     DcMotor mtrCollect;
     Servo svoExtend;
     Servo svoRotate;
