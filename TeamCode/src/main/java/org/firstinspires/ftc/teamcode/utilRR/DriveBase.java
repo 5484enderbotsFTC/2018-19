@@ -22,10 +22,8 @@ import java.util.Arrays;
  **/
 
 public class DriveBase {
-    public DcMotor mtrFL;
-    public DcMotor mtrFR;
-    public DcMotor mtrBL;
-    public DcMotor mtrBR;
+    public DcMotor mtrL;
+    public DcMotor mtrR;
     public Encoder encFL;
     public Encoder encFR;
     public Encoder encBL;
@@ -37,20 +35,17 @@ public class DriveBase {
     final double K_P = 0.01;
     public DriveBase(HardwareMap hardwareMap, boolean calibrate) {
         this.hardwareMap = hardwareMap;
-        mtrBL = hardwareMap.dcMotor.get("mtrBl");
-        mtrBR = hardwareMap.dcMotor.get("mtrBr");
-        mtrFL = hardwareMap.dcMotor.get("mtrFl");
-        mtrFR = hardwareMap.dcMotor.get("mtrFr");
+        mtrL = hardwareMap.dcMotor.get("mtrL");
+        mtrR = hardwareMap.dcMotor.get("mtrR");
+        mtrL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        mtrFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        encFL = new Encoder(mtrFL);
-        encFR = new Encoder(mtrFL);
-        encBL = new Encoder(mtrFL);
-        encBR = new Encoder(mtrFL);
+        encFL = new Encoder(mtrL);
+        encFR = new Encoder(mtrR);
+        encBL = new Encoder(mtrL);
+        encBR = new Encoder(mtrR);
 
         snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
         if (calibrate)
@@ -59,12 +54,10 @@ public class DriveBase {
 
     }
     public void drive(double X, double Y){
-        double leftPower = X - Y;
-        double rightPower = X + Y;
-        mtrBL.setPower(leftPower);
-        mtrFL.setPower(leftPower);
-        mtrBR.setPower(rightPower);
-        mtrFR.setPower(rightPower);
+        double leftPower = X + Y;
+        double rightPower = X - Y;
+        mtrL.setPower(leftPower);
+        mtrR.setPower(rightPower);
     }
 
     public void driveEncoder(double count){
@@ -80,10 +73,8 @@ public class DriveBase {
         resetGyro();
         double leftPower = Integer.signum((int)rotation);
         double rightPower = Integer.signum((int)rotation);
-        mtrBL.setPower(leftPower);
-        mtrFL.setPower(leftPower);
-        mtrBR.setPower(rightPower);
-        mtrFR.setPower(rightPower);
+        mtrL.setPower(leftPower);
+        mtrR.setPower(rightPower);
         while (Math.abs(getAngle())<Math.abs(rotation)){
 
         }
