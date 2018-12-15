@@ -12,8 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-import static java.lang.Thread.sleep;
-
 
 /**
  * Created by guinea on 11/5/17.
@@ -43,8 +41,8 @@ public class DriveBase {
 
         encFL = new Encoder(mtrL);
         encFR = new Encoder(mtrR);
-        encBL = new Encoder(mtrL);
-        encBR = new Encoder(mtrR);
+        //encBL = new Encoder(mtrL);
+        //encBR = new Encoder(mtrR);
 
         snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
         if (calibrate)
@@ -62,7 +60,7 @@ public class DriveBase {
     public void driveEncoder(double count){
         resetEncoders();
         while (encFL.getEncValue()<count){
-            drive(0, 1);
+            drive(1, 0);
         }
         drive(0, 0);
     }
@@ -116,8 +114,8 @@ public class DriveBase {
     public void resetEncoders() {
         encFL.resetEncoder();
         encFR.resetEncoder();
-        encBL.resetEncoder();
-        encBR.resetEncoder();
+        //encBL.resetEncoder();
+        //encBR.resetEncoder();
     }
 
 }

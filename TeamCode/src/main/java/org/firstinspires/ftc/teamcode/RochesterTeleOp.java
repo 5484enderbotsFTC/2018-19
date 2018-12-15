@@ -28,6 +28,7 @@ public class RochesterTeleOp extends OpMode {
     TouchSensor limHangHigh;
     Servo svoTape;
     Encoder encHang;
+    DcMotor mtrTape;
 
     double posSvo = 0;
     double posTape = 0;
@@ -53,6 +54,7 @@ public class RochesterTeleOp extends OpMode {
         //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
         svoTape = hardwareMap.servo.get("svoTape");
         encHang = new Encoder(mtrCollect);
+        mtrTape = hardwareMap.dcMotor.get("mtrTape");
     }
 
     public void start() {
@@ -90,6 +92,9 @@ public class RochesterTeleOp extends OpMode {
         if(gamepad1.right_trigger>0.5){svoCollect.setPosition(COLLECT);}
         else if(gamepad1.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
         else{svoCollect.setPosition(.5);}
+
+        if(gamepad2.left_bumper) {mtrTape.setPower(-1);}
+        else{mtrTape.setPower(0);}
 
         if(gamepad2.a){driveBase.turnInPlace(180);}
         telemetry.update();

@@ -68,7 +68,6 @@ public class MeasureOp extends OpMode {
         //if (gamepad1.dpad_right){svoHang.setPosition(1);}
         //telemetry.addData("hang pos", encHang.getEncValue());
 
-        if(gamepad2.a){driveBase.turnInPlace(180);}
         telemetry.update();
     }
 

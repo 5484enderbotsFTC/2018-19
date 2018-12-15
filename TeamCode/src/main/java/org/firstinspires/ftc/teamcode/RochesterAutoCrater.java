@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
  *
  * Created by Avery on 10/26/18.
  */
-@Autonomous (name = "RochesterDepotAuto")
-public class RochesterDepotAuto extends LinearOpMode {
+@Autonomous (name = "RochesterAutoCrater")
+public class RochesterAutoCrater extends LinearOpMode {
 
     private DriveBase driveBase;
     private Servo svoHang;
@@ -49,17 +49,6 @@ public class RochesterDepotAuto extends LinearOpMode {
     driveBase.drive(1, 0);
     sleep(1000);
     driveBase.drive(0, 0);
-
-    svoTape.setPosition(tapeMid);
-    mtrTape.setPower(1);
-    sleep(1000);
-    mtrTape.setPower(0);
-    svoTape.setPosition(tapeDown);
-    sleep(1000);
-    mtrTape.setPower(-1);
-    sleep(1500);
-    mtrTape.setPower(0);
-    svoTape.setPosition(tapeUp);
 
 
 
