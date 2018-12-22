@@ -21,10 +21,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 public class DriveBase {
     public DcMotor mtrL;
     public DcMotor mtrR;
-    public Encoder encFL;
-    public Encoder encFR;
-    public Encoder encBL;
-    public Encoder encBR;
+    public Encoder encL;
+    public Encoder encR;
     public BNO055IMU snsImu;
     private HardwareMap hardwareMap;
 
@@ -39,10 +37,8 @@ public class DriveBase {
         mtrL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         mtrR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        encFL = new Encoder(mtrL);
-        encFR = new Encoder(mtrR);
-        //encBL = new Encoder(mtrL);
-        //encBR = new Encoder(mtrR);
+        encL = new Encoder(mtrL);
+        encR = new Encoder(mtrR);
 
         snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
         if (calibrate)
@@ -59,7 +55,7 @@ public class DriveBase {
 
     public void driveEncoder(double count){
         resetEncoders();
-        while (encFL.getEncValue()<count){
+        while (encL.getEncValue()<count){
             drive(1, 0);
         }
         drive(0, 0);
@@ -112,10 +108,8 @@ public class DriveBase {
         resetEncoders();
     }
     public void resetEncoders() {
-        encFL.resetEncoder();
-        encFR.resetEncoder();
-        //encBL.resetEncoder();
-        //encBR.resetEncoder();
+        encL.resetEncoder();
+        encR.resetEncoder();
     }
 
 }
