@@ -9,14 +9,11 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 /**
  * Created by Sarahpambi76 on 12/10/18.
  */
 @TeleOp (name="RochesterTeleOp", group="K9bot")
-public class RochesterTeleOp extends OpMode {
+public class ClarksonTeleOp extends OpMode {
 
 
     Servo svoHang;
@@ -29,7 +26,7 @@ public class RochesterTeleOp extends OpMode {
     Servo svoTape;
     Encoder encHang;
     DcMotor mtrTape;
-    DcMotor mtrDispense;
+    Servo svoDispenser;
 
     double posSvo = 0;
     double posTape = 0;
@@ -56,6 +53,7 @@ public class RochesterTeleOp extends OpMode {
         svoTape = hardwareMap.servo.get("svoTape");
         encHang = new Encoder(mtrCollect);
         mtrTape = hardwareMap.dcMotor.get("mtrTape");
+        svoDispenser = hardwareMap.servo.get("svoDispenser");
     }
 
     public void start() {
@@ -96,6 +94,14 @@ public class RochesterTeleOp extends OpMode {
 
         if(gamepad1.left_bumper) {mtrTape.setPower(-1);}
         else{mtrTape.setPower(0);}
+
+        if(gamepad2.left_stick_y>0.5){
+            svoDispenser.setPosition(UPWARD);
+        }
+        else if(gamepad2.left_stick_y<-0.5){
+            svoDispenser.setPosition(DOWNWARD);
+        }
+        else {svoDispenser.setPosition(0.5);}
 
         if(gamepad2.a){driveBase.turnInPlace(180);}
         telemetry.update();
