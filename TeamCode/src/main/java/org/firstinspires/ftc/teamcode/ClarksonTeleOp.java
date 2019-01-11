@@ -51,10 +51,8 @@ public class ClarksonTeleOp extends OpMode {
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
         svoCollect = hardwareMap.servo.get("svoCollect");
-        //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
-        //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
-        svoTape = hardwareMap.servo.get("svoTape");
-        mtrTape = hardwareMap.dcMotor.get("mtrTape");
+        svoTapeRotate = hardwareMap.servo.get("svoTape");
+        svoTapeExtend = hardwareMap.servo.get("mtrTape");
         svoDispenser = hardwareMap.servo.get("svoDispenser");
 
         limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
@@ -103,9 +101,9 @@ public class ClarksonTeleOp extends OpMode {
         else{svoCollect.setPosition(0);}
 
         if(gamepad1.left_bumper) {
-            svoTapeExtend.setPower(-1);}
+            svoTapeExtend.setPosition(0);}
         else{
-            svoTapeExtend.setPower(0);}
+            svoTapeExtend.setPosition(0.5);}
 
         if(gamepad2.left_stick_y>0.5){
             svoDispenser.setPosition(UPWARD);
