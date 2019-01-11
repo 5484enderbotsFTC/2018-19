@@ -42,7 +42,7 @@ public class MeasureOp extends OpMode {
         svoCollect = hardwareMap.servo.get("svoCollect");
         //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
         //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
-        svoTape = hardwareMap.servo.get("svoTape");
+        svoTape = hardwareMap.servo.get("svoTapeRotate");
         encHang = new Encoder(mtrCollect);
     }
 

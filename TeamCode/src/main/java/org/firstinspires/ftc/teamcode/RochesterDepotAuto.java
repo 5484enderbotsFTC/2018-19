@@ -31,8 +31,8 @@ public class RochesterDepotAuto extends LinearOpMode {
     public void runOpMode(){
     driveBase = new DriveBase(hardwareMap,false);
     svoHang = hardwareMap.servo.get("mtrHang");
-    svoTape = hardwareMap.servo.get("svoTape");
-    mtrTape = hardwareMap.dcMotor.get("mtrTape");
+    svoTape = hardwareMap.servo.get("svoTapeRotate");
+    mtrTape = hardwareMap.dcMotor.get("svoTapeExtend");
     limHangLow = hardwareMap.get(DigitalChannel.class, "limHangLow");
     limHangHigh = hardwareMap.get(DigitalChannel.class, "limHangHigh");
 

@@ -12,24 +12,27 @@ import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 /**
  * Created by Sarahpambi76 on 12/10/18.
  */
-@TeleOp (name="RochesterTeleOp", group="K9bot")
+@TeleOp (name="ClarksonTeleOp", group="K9bot")
 public class ClarksonTeleOp extends OpMode {
 
 
     DcMotor mtrHang;
-    DcMotor mtrCollectSlide;
+    DcMotor mtrExtend;
     Servo svoRotate;
     Servo svoCollect;
     DriveBase driveBase;
-    TouchSensor limHangLow;
-    TouchSensor limHangHigh;
-    Servo svoTape;
+    Servo svoTapeRotate;
     Encoder encHang;
-    DcMotor mtrTape;
+    Servo svoTapeExtend;
     Servo svoDispenser;
 
+
+    TouchSensor limExtendLow;
+    TouchSensor limExtendHigh;
+    TouchSensor limHangLow;
+    TouchSensor limHangHigh;
+
     double posSvo = 0;
-    double posTape = 0;
     static double UPWARD = 0;
     static double DOWNWARD = 1;
     static double IN = -1;
@@ -45,7 +48,7 @@ public class ClarksonTeleOp extends OpMode {
     public void init() {
         driveBase = new DriveBase(hardwareMap,false);
         mtrHang = hardwareMap.dcMotor.get("mtrHang");
-        mtrCollectSlide = hardwareMap.dcMotor.get("mtrCollectSlide");
+        mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
         svoCollect = hardwareMap.servo.get("svoCollect");
         //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
@@ -53,6 +56,11 @@ public class ClarksonTeleOp extends OpMode {
         svoTape = hardwareMap.servo.get("svoTape");
         mtrTape = hardwareMap.dcMotor.get("mtrTape");
         svoDispenser = hardwareMap.servo.get("svoDispenser");
+
+        limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
+        limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
+        limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
+        limHangLow = hardwareMap.touchSensor.get("limHangLow");
     }
 
     public void start() {
@@ -71,9 +79,12 @@ public class ClarksonTeleOp extends OpMode {
         else{
             mtrHang.setPower(0);}
 
-        if(gamepad2.left_trigger>0.5){mtrCollectSlide.setPower(OUT);}
-        else if(gamepad2.left_bumper){mtrCollectSlide.setPower(IN);}
-        else {mtrCollectSlide.setPower(0);}
+        if(gamepad2.left_trigger>0.5){
+            mtrExtend.setPower(OUT);}
+        else if(gamepad2.left_bumper){
+            mtrExtend.setPower(IN);}
+        else {
+            mtrExtend.setPower(0);}
 
         //if(gamepad1.dpad_up){svoRotate.setPosition(CPOSITION);}
         //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
@@ -91,8 +102,10 @@ public class ClarksonTeleOp extends OpMode {
         else if(gamepad2.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
         else{svoCollect.setPosition(0);}
 
-        if(gamepad1.left_bumper) {mtrTape.setPower(-1);}
-        else{mtrTape.setPower(0);}
+        if(gamepad1.left_bumper) {
+            svoTapeExtend.setPower(-1);}
+        else{
+            svoTapeExtend.setPower(0);}
 
         if(gamepad2.left_stick_y>0.5){
             svoDispenser.setPosition(UPWARD);

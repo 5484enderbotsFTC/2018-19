@@ -48,14 +48,14 @@ public class RochesterTeleOp extends OpMode {
     public void init() {
         driveBase = new DriveBase(hardwareMap,false);
         svoHang = hardwareMap.servo.get("mtrHang");
-        mtrCollectSlide = hardwareMap.dcMotor.get("mtrCollectSlide");
+        mtrCollectSlide = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
         mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
         //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
         //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
-        svoTape = hardwareMap.servo.get("svoTape");
+        svoTape = hardwareMap.servo.get("svoTapeRotate");
         encHang = new Encoder(mtrCollect);
-        mtrTape = hardwareMap.dcMotor.get("mtrTape");
+        mtrTape = hardwareMap.dcMotor.get("svoTapeExtend");
     }
 
     public void start() {
