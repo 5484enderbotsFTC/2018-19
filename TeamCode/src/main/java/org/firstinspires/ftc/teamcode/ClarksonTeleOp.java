@@ -16,10 +16,10 @@ import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 public class ClarksonTeleOp extends OpMode {
 
 
-    Servo svoHang;
+    DcMotor mtrHang;
     DcMotor mtrCollectSlide;
     Servo svoRotate;
-    DcMotor mtrCollect;
+    Servo svoCollect;
     DriveBase driveBase;
     TouchSensor limHangLow;
     TouchSensor limHangHigh;
@@ -38,20 +38,19 @@ public class ClarksonTeleOp extends OpMode {
     double CPOSITION = 0.45;
     double SETPOSITION = 0.5;
     static double COLLECT = 1;
-    static double REVERSECOLLECT = -1;
+    static double REVERSECOLLECT = 0;
 
 
     @Override
     public void init() {
         driveBase = new DriveBase(hardwareMap,false);
-        svoHang = hardwareMap.servo.get("mtrHang");
+        mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrCollectSlide = hardwareMap.dcMotor.get("mtrCollectSlide");
         svoRotate = hardwareMap.servo.get("svoRotate");
-        mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
+        svoCollect = hardwareMap.servo.get("svoCollect");
         //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
         //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
         svoTape = hardwareMap.servo.get("svoTape");
-        encHang = new Encoder(mtrCollect);
         mtrTape = hardwareMap.dcMotor.get("mtrTape");
         svoDispenser = hardwareMap.servo.get("svoDispenser");
     }
@@ -66,11 +65,11 @@ public class ClarksonTeleOp extends OpMode {
         driveBase.drive(Y, X);
 
         if(gamepad2.right_stick_y>0.5){
-            svoHang.setPosition(UPWARD);}
+            mtrHang.setPower(1);}
         else if(gamepad2.right_stick_y<-0.5){
-            svoHang.setPosition(DOWNWARD);}
+            mtrHang.setPower(-1);}
         else{
-            svoHang.setPosition(0.5);}
+            mtrHang.setPower(0);}
 
         if(gamepad2.left_trigger>0.5){mtrCollectSlide.setPower(OUT);}
         else if(gamepad2.left_bumper){mtrCollectSlide.setPower(IN);}
@@ -88,9 +87,9 @@ public class ClarksonTeleOp extends OpMode {
         //if (gamepad1.dpad_right){svoHang.setPosition(1);}
         //telemetry.addData("hang pos", encHang.getEncValue());
 
-        if(gamepad2.right_trigger>0.5){mtrCollect.setPower(COLLECT);}
-        else if(gamepad2.right_bumper){mtrCollect.setPower(REVERSECOLLECT);}
-        else{mtrCollect.setPower(0);}
+        if(gamepad2.right_trigger>0.5){svoCollect.setPosition(COLLECT);}
+        else if(gamepad2.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
+        else{svoCollect.setPosition(0);}
 
         if(gamepad1.left_bumper) {mtrTape.setPower(-1);}
         else{mtrTape.setPower(0);}
