@@ -90,7 +90,7 @@ public class DriveBase {
 
     public double getAngle() {
         if (snsImu != null) {
-            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle - offset;
+            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset;
         } else {
         return 0;
         }
@@ -98,7 +98,7 @@ public class DriveBase {
 
     public void resetGyro() {
         if (snsImu != null) {
-            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).secondAngle;
+            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
         } else {
         }
     }
