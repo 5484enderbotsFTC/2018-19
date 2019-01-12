@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.teamcode.utilRR.AnalogTouch;
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 
@@ -16,23 +17,29 @@ import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 public class ClarksonTeleOp extends OpMode {
 
 
-    DcMotor mtrHang;
-    DcMotor mtrExtend;
-    Servo svoRotate;
-    Servo svoCollect;
-    DriveBase driveBase;
-    Servo svoTapeRotate;
-    Encoder encHang;
-    Servo svoTapeExtend;
-    Servo svoDispenser;
+    private DcMotor mtrHang;
+    private DcMotor mtrExtend;
+    private Servo svoRotate;
+    private Servo svoCollect;
+    private DriveBase driveBase;
+    private Servo svoTapeRotate;
+    private Encoder encHang;
+    private Servo svoTapeExtend;
+    private Servo svoDispenser;
 
 
-    TouchSensor limExtendLow;
-    TouchSensor limExtendHigh;
-    TouchSensor limHangLow;
-    TouchSensor limHangHigh;
+    //private TouchSensor limHangLow;
+    //private TouchSensor limHangHigh;
+    //private TouchSensor limDispenseLow;
+    //private TouchSensor limDispenseHigh;
+    //private TouchSensor limExtendLow;
+    //private TouchSensor limExtendHigh;
+    private AnalogTouch limDispenseLow;
+    private AnalogTouch limDispenseHigh;
+    private AnalogTouch limExtendLow;
+    private AnalogTouch limExtendHigh;
 
-    double posSvo = 0;
+
     static double UPWARD = 0;
     static double DOWNWARD = 1;
     static double IN = -1;
@@ -55,10 +62,17 @@ public class ClarksonTeleOp extends OpMode {
         svoTapeExtend = hardwareMap.servo.get("mtrTape");
         svoDispenser = hardwareMap.servo.get("svoDispenser");
 
-        limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
-        limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
-        limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
-        limHangLow = hardwareMap.touchSensor.get("limHangLow");
+        //limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
+        //limHangLow = hardwareMap.touchSensor.get("limHangLow");
+        //limDispenseHigh = hardwareMap.touchSensor.get("limHDispenseHigh");
+        //limDispenseLow = hardwareMap.touchSensor.get("limDispenseLow");
+        //limExtendHigh = hardwareMap.touchSensor.get("limExtendHigh");
+        //limExtendLow = hardwareMap.touchSensor.get("limExtendLow");
+        limDispenseLow = new AnalogTouch(hardwareMap, "limDispenseLow");
+        limDispenseHigh = new AnalogTouch(hardwareMap, "limDispenseHigh");
+        limExtendLow = new AnalogTouch(hardwareMap, "limExtendLow");
+        limExtendHigh = new AnalogTouch(hardwareMap, "limExtendHigh");
+
     }
 
     public void start() {
@@ -67,22 +81,31 @@ public class ClarksonTeleOp extends OpMode {
     public void loop() {
         double Y = -gamepad1.left_stick_y;
         double X = gamepad1.right_stick_x;
+        double posSvo = 0;
 
         driveBase.drive(Y, X);
 
-        if(gamepad2.right_stick_y>0.5){
+        if(gamepad2.right_stick_y>0.5){// && !limHangHigh.isPressed()){
             mtrHang.setPower(1);}
-        else if(gamepad2.right_stick_y<-0.5){
+        else if(gamepad2.right_stick_y<-0.5){// && !limHangLow.isPressed()){
             mtrHang.setPower(-1);}
         else{
             mtrHang.setPower(0);}
 
-        if(gamepad2.left_trigger>0.5){
+        if(gamepad2.left_trigger>0.5 && !limExtendHigh.isPressed()){
             mtrExtend.setPower(OUT);}
-        else if(gamepad2.left_bumper){
+        else if(gamepad2.left_bumper && !limExtendLow.isPressed()){
             mtrExtend.setPower(IN);}
         else {
-            mtrExtend.setPower(0);}
+            mtrExtend.setPower(0);
+        }
+
+        if(gamepad2.left_stick_y>0.5 && !limDispenseHigh.isPressed()){
+            svoDispenser.setPosition(1);}
+        else if(gamepad2.left_stick_y<-0.5 && !limDispenseLow.isPressed()){
+            svoDispenser.setPosition(0);}
+        else{
+            svoDispenser.setPosition(0.5);}
 
         //if(gamepad1.dpad_up){svoRotate.setPosition(CPOSITION);}
         //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
