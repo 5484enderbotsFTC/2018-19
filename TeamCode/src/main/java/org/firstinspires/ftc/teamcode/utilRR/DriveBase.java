@@ -12,6 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by guinea on 11/5/17.
@@ -47,8 +49,8 @@ public class DriveBase {
 
     }
     public void drive(double Y, double X){
-        double leftPower = -Y + X;
-        double rightPower = Y + X;
+        double leftPower = -Y - X;
+        double rightPower = Y - X;
         mtrL.setPower(leftPower);
         mtrR.setPower(rightPower);
     }
@@ -62,18 +64,26 @@ public class DriveBase {
     }
 
     public void turnInPlace(double rotation){
+        int sign = Integer.signum((int)rotation);
         resetGyro();
-        double leftPower = Integer.signum((int)rotation);
-        double rightPower = Integer.signum((int)rotation);
-        while (Math.abs(getAngle())<Math.abs(rotation)){
-            mtrL.setPower(leftPower);
-            mtrR.setPower(rightPower);
+        while (sign*getAngle()<sign*rotation){
+            drive(0, sign);
         }
-        drive(0, 0);
+        //JANK BRAKES
+        if(rotation!=0) {
+            drive(0, -sign);
+        }
+        try {
+            Thread.sleep(100);
+        } catch(InterruptedException e) {
+            System.out.println("got interrupted!");
+        }
+        drive(0,0);
+
     }
 
 
-    private void initIMU() {
+    public void initIMU() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -90,7 +100,7 @@ public class DriveBase {
 
     public double getAngle() {
         if (snsImu != null) {
-            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset;
+            return -(snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset);
         } else {
         return 0;
         }
