@@ -69,6 +69,7 @@ public class ClarksonNearAuto extends LinearOpMode {
         svoTapeRotate = hardwareMap.servo.get("svoTapeRotate");
         svoTapeExtend = hardwareMap.servo.get("svoTapeExtend");
         svoDispense = hardwareMap.servo.get("svoDispense");
+        driveBase.initIMU();
         samplingVision = new SamplingVision(hardwareMap);
 
         telemetry.addData("Status", "Initialised");
@@ -88,19 +89,21 @@ public class ClarksonNearAuto extends LinearOpMode {
         telemetry.update();
 
         driveBase.drive(1,0);
-        svoRotate.setPosition(1);
-        sleep(500);
+        svoRotate.setPosition(0.8);
+        sleep(200);
         driveBase.drive(0,0);
 
         driveBase.turnInPlace(30-(posMineral*30));
         driveBase.drive(1,0);
-        svoRotate.setPosition(1);
-        sleep(1000);
+        sleep(1500);
         driveBase.drive(-1,0);
         svoRotate.setPosition(0);
-        sleep(1000);
+        sleep(1500);
         driveBase.drive(0,0);
+        svoTapeRotate.setPosition(TAPEDOWN);
+        svoTapeExtend.setPosition(TAPEOUT);
         driveBase.turnInPlace(-30+(posMineral*30));
+        sleep(20000);
 
 /*
         driveBase.drive(-1, 0);

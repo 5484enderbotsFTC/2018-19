@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.utilRR.AnalogTouch;
 import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
 import org.firstinspires.ftc.teamcode.utilRR.Encoder;
 
+import static org.firstinspires.ftc.teamcode.ClarksonNearAuto.TAPEIN;
+
 /**
  * Created by Sarahpambi76 on 12/10/18.
  */
@@ -77,6 +79,7 @@ public class ClarksonTeleOp extends OpMode {
     }
 
     public void start() {
+        svoTapeExtend.setPosition(TAPEIN);
     }
 
     public void loop() {
@@ -112,8 +115,9 @@ public class ClarksonTeleOp extends OpMode {
         DispenseLow = limDispenseLow.isPressed() ? 0.5 : 0;
         svoDispense.setPosition(
                 Math.min(
-                        Math.max(0.5-(gamepad2.left_stick_y/2),
-                                DispenseLow),
+                        //Math.max(
+                                0.5-(gamepad2.left_stick_y/2),
+                        //        DispenseLow),
                         DispenseHigh)
         );
 
@@ -123,7 +127,7 @@ public class ClarksonTeleOp extends OpMode {
         //else if(gamepad1.dpad_right){svoRotate.setPosition(SETPOSITION);}
 
         //if (gamepad2.dpad_up){posSvo=0.635;} else if (gamepad2.dpad_down){posSvo=0;} else if (gamepad2.dpad_left||gamepad2.dpad_right) {posSvo=0.235;}
-        if (gamepad1.dpad_up){posSvo+=0.02;} else if (gamepad1.dpad_down){posSvo-=0.02;} else if (gamepad1.dpad_left||gamepad1.dpad_right) {}
+        if (gamepad1.dpad_up && posSvo<=1){posSvo+=0.02;} else if (gamepad1.dpad_down && posSvo>=0){posSvo-=0.02;} else if (gamepad1.dpad_left||gamepad1.dpad_right) {}
         svoRotate.setPosition(posSvo);
         telemetry.addData("pos", posSvo);
 
