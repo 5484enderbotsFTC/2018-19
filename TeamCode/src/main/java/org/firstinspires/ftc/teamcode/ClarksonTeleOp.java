@@ -54,7 +54,7 @@ public class ClarksonTeleOp extends OpMode {
     double posSvo = 0;
     double DispenseHigh;
     double DispenseLow;
-//delet me
+
     @Override
     public void init() {
         driveBase = new DriveBase(hardwareMap,false);
