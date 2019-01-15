@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.utilRR.AnalogTouch;
@@ -21,12 +22,12 @@ public class ClarksonTeleOp extends OpMode {
     private DcMotor mtrHang;
     private DcMotor mtrExtend;
     private Servo svoRotate;
-    private Servo svoCollect;
+    private DcMotorSimple mtrCollect;
     private DriveBase driveBase;
     private Servo svoTapeRotate;
     private Encoder encHang;
     private Servo svoTapeExtend;
-    private Servo svoDispense;
+    private DcMotorSimple mtrDispense;
 
 
     //private TouchSensor limHangLow;
@@ -60,10 +61,10 @@ public class ClarksonTeleOp extends OpMode {
         mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
-        svoCollect = hardwareMap.servo.get("svoCollect");
+        mtrCollect = hardwareMap.get(DcMotorSimple.class,"mtrCollect");
         svoTapeRotate = hardwareMap.servo.get("svoTapeRotate");
         svoTapeExtend = hardwareMap.servo.get("svoTapeExtend");
-        svoDispense = hardwareMap.servo.get("svoDispense");
+        mtrDispense = hardwareMap.get(DcMotorSimple.class,"mtrDispense");
 
         //limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
         //limHangLow = hardwareMap.touchSensor.get("limHangLow");
@@ -106,19 +107,19 @@ public class ClarksonTeleOp extends OpMode {
         }
 
         //if(gamepad2.left_stick_y<.5 && !limDispenseHigh.isPressed()){
-        //    svoDispense.setPosition(1);}
+        //    mtrDispense.setPosition(1);}
         //else if(gamepad2.left_stick_y>-0.5 && !limDispenseLow.isPressed()){
-        //    svoDispense.setPosition(0);}
+        //    mtrDispense.setPosition(0);}
         //else{
-        //    svoDispense.setPosition(0.5);}
+        //    mtrDispense.setPosition(0.5);}
         DispenseHigh = limDispenseHigh.isPressed() ? 0.5 : 1;
         DispenseLow = limDispenseLow.isPressed() ? 0.5 : 0;
-        svoDispense.setPosition(
-                Math.min(
+        mtrDispense.setPower(
+                //Math.min(
                         //Math.max(
-                                0.5-(gamepad2.left_stick_y/2),
+                                gamepad2.left_stick_y//,
                         //        DispenseLow),
-                        DispenseHigh)
+                        //DispenseHigh)
         );
 
         //if(gamepad1.dpad_up){svoRotate.setPosition(CPOSITION);}
@@ -135,9 +136,16 @@ public class ClarksonTeleOp extends OpMode {
         //if (gamepad1.dpad_right){svoHang.setPosition(1);}
         //telemetry.addData("hang pos", encHang.getEncValue());
 
-        if(gamepad1.right_trigger>0.5){svoCollect.setPosition(COLLECT);}
-        else if(gamepad1.right_bumper){svoCollect.setPosition(REVERSECOLLECT);}
-        else{svoCollect.setPosition(0.5);}
+        //if(gamepad1.right_trigger>0.5){mtrCollect.setPosition(COLLECT);}
+        //else if(gamepad1.right_bumper){mtrCollect.setPosition(REVERSECOLLECT);}
+        //else{mtrCollect.setPosition(0.5);}
+
+        if(gamepad1.right_trigger>0.5){
+            mtrCollect.setPower(1);}
+        else if(gamepad1.right_bumper){
+            mtrCollect.setPower(-1);}
+        else{
+            mtrCollect.setPower(0);}
 
         if(gamepad1.left_bumper) {
             svoTapeExtend.setPosition(0.08);}
