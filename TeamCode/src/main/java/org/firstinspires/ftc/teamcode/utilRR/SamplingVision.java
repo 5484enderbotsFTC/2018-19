@@ -2,11 +2,14 @@ package org.firstinspires.ftc.teamcode.utilRR;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.vuforia.CameraDevice;
 
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
@@ -17,8 +20,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 public class SamplingVision {
     private int mineralPos = 1;
+    private Telemetry telemetry;
     private HardwareMap hardwareMap;
-    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    private static final String zTFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
     private static final String VUFORIA_KEY =
@@ -39,6 +43,11 @@ public class SamplingVision {
     boolean focusModeSet;
 
     public SamplingVision(HardwareMap hardwareMap){
+        this(hardwareMap, null);
+    }
+
+    public SamplingVision(HardwareMap hardwareMap, Telemetry telemetry){
+        this.telemetry = telemetry;
         this.hardwareMap = hardwareMap;
 
         initVuforia();
@@ -74,6 +83,13 @@ public class SamplingVision {
                     } else {
                         silverMineral2X = (int) recognition.getLeft();
                     }
+                    if(telemetry!=null) {
+                        telemetry.addData("silver 1", silverMineral1X);
+                        telemetry.addData("gold 1", goldMineralX);
+                        telemetry.addData("silver 2", silverMineral2X);
+                        telemetry.update();
+                    }
+
                 }
                 if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                     if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
@@ -84,8 +100,10 @@ public class SamplingVision {
                         mineralPos = 1; //centre
                     }
                 }
+
             }
         }
+
         return mineralPos;
     }
     public void stop(){

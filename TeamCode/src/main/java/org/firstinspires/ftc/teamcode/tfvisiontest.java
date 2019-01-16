@@ -14,11 +14,12 @@ public class tfvisiontest extends LinearOpMode {
     @Override
     public void runOpMode(){
 
-        samplingVision = new SamplingVision(hardwareMap);
+        samplingVision = new SamplingVision(hardwareMap,telemetry);
 
         while(opModeIsActive()){
-            telemetry.addData("Mineral position", samplingVision.getMineral());
-            telemetry.update();
+            //telemetry.addData("Mineral position", samplingVision.getMineral());
+            //telemetry.update();
+            samplingVision.getMineral();
         }
     }
 

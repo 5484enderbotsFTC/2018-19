@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.utilRR.AnalogTouch;
@@ -18,12 +19,12 @@ public class ClarksonNearAuto extends LinearOpMode {
     private DcMotor mtrHang;
     private DcMotor mtrExtend;
     private Servo svoRotate;
-    private Servo svoCollect;
+    private DcMotorSimple mtrCollect;
     private DriveBase driveBase;
     private Servo svoTapeRotate;
     private Encoder encHang;
     private Servo svoTapeExtend;
-    private Servo svoDispense;
+    private DcMotorSimple mtrDispense;
 
 
     //private TouchSensor limHangLow;
@@ -65,10 +66,10 @@ public class ClarksonNearAuto extends LinearOpMode {
         mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
-        svoCollect = hardwareMap.servo.get("svoCollect");
+        mtrCollect = hardwareMap.get(DcMotorSimple.class,"mtrCollect");
         svoTapeRotate = hardwareMap.servo.get("svoTapeRotate");
         svoTapeExtend = hardwareMap.servo.get("svoTapeExtend");
-        svoDispense = hardwareMap.servo.get("svoDispense");
+        mtrDispense = hardwareMap.get(DcMotorSimple.class,"mtrDispense");
         driveBase.initIMU();
         samplingVision = new SamplingVision(hardwareMap);
 
