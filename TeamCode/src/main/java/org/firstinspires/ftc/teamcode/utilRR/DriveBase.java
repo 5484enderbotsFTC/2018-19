@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.utilRR;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,6 +39,8 @@ public class DriveBase {
 
         mtrL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         mtrR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mtrR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         encL = new Encoder(mtrL);
         encR = new Encoder(mtrR);
@@ -55,10 +58,11 @@ public class DriveBase {
         mtrR.setPower(rightPower);
     }
 
-    public void driveEncoder(double count){
+    public void driveEncoder(double count, LinearOpMode opMode){
+        int sign = Integer.signum((int)count);
         resetEncoders();
-        while (encL.getEncValue()<count){
-            drive(1, 0);
+        while (sign*encL.getEncValue()<sign*count && opMode.opModeIsActive()){
+            drive(sign, 0);
         }
         drive(0, 0);
     }
@@ -66,18 +70,14 @@ public class DriveBase {
     public void turnInPlace(double rotation){
         int sign = Integer.signum((int)rotation);
         resetGyro();
-        while (sign*getAngle()<sign*rotation){
-            drive(0, sign);
+        double angle = 0;
+        if (rotation!=0) {
+            while (angle < Math.abs(rotation)) {
+                angle = Math.abs(getAngle());
+                drive(0, sign * Math.min((Math.abs(rotation) - angle) / (Math.abs(rotation)), 0.5));
+            }
         }
-        //JANK BRAKES
-        if(rotation!=0) {
-            drive(0, -sign);
-        }
-        try {
-            Thread.sleep(100);
-        } catch(InterruptedException e) {
-            System.out.println("got interrupted!");
-        }
+
         drive(0,0);
 
     }
@@ -100,7 +100,7 @@ public class DriveBase {
 
     public double getAngle() {
         if (snsImu != null) {
-            return -(snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset);
+            return (snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset);
         } else {
         return 0;
         }

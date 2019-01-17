@@ -46,9 +46,9 @@ public class ClarksonTeleOp extends OpMode {
     static double DOWNWARD = 0;
     static double IN = 1;
     static double OUT = -1;
-    double COLLECTOROUT = 0.55;
-    double COLLECTORUP = 0.45;
-    double COLLECTORIN = 0;
+    static double COLLECTOROUT = 0.61;
+    static double COLLECTORUP = 0.47;
+    static double COLLECTORIN = 0;
     static double COLLECT = 1;
     static double REVERSECOLLECT = 0;
     double posSvo = 0;
@@ -90,26 +90,20 @@ public class ClarksonTeleOp extends OpMode {
 
         driveBase.drive(Y, X);
 
-        if(gamepad2.right_stick_y>0.5){// && !limHangHigh.isPressed()){
+        if(gamepad2.right_stick_y>0.5 || gamepad1.a){// && !limHangHigh.isPressed()){
             mtrHang.setPower(1);}
-        else if(gamepad2.right_stick_y<-0.5){// && !limHangLow.isPressed()){
+        else if(gamepad2.right_stick_y<-0.5 || gamepad1.b){// && !limHangLow.isPressed()){
             mtrHang.setPower(-1);}
         else{
             mtrHang.setPower(0);}
 
         if(gamepad1.left_trigger>0.5 && !limExtendHigh.isPressed()){
             mtrExtend.setPower(OUT);
-            svoRotate.setPosition(COLLECTOROUT);
         }
         else if(gamepad1.left_bumper && !limExtendLow.isPressed()){
-            mtrExtend.setPower(IN);
-            svoRotate.setPosition(COLLECTORUP);}
+            mtrExtend.setPower(IN); }
         else {
             mtrExtend.setPower(0);
-        }
-
-        if(limExtendLow.isPressed()) {
-            svoRotate.setPosition(COLLECTORIN);
         }
 
         //if(gamepad2.left_stick_y<.5 && !limDispenseHigh.isPressed()){
@@ -127,13 +121,13 @@ public class ClarksonTeleOp extends OpMode {
                         //        DispenseLow),
                         //DispenseHigh)
         );
+        if(gamepad1.y){
+            mtrDispense.setPower(-1);
+        } else if(gamepad1.x){
+            mtrDispense.setPower(1);
+        }
 
-        //if(gamepad1.dpad_up){svoRotate.setPosition(CPOSITION);}
-        //else if(gamepad1.dpad_down){svoRotate.setPosition(DPOSITION);}
-        //else if(gamepad1.dpad_left){svoRotate.setPosition(SETPOSITION);}
-        //else if(gamepad1.dpad_right){svoRotate.setPosition(SETPOSITION);}
-
-        //if (gamepad2.dpad_up){posSvo=0.635;} else if (gamepad2.dpad_down){posSvo=0;} else if (gamepad2.dpad_left||gamepad2.dpad_right) {posSvo=0.235;}
+        //if (gamepad2.dpad_up){posSvo=0.61;} else if (gamepad2.dpad_down){posSvo=0;} else if (gamepad2.dpad_left||gamepad2.dpad_right) {posSvo=0.235;}
         if (gamepad1.dpad_up && posSvo<=1){posSvo+=0.02;} else if (gamepad1.dpad_down && posSvo>=0){posSvo-=0.02;} else if (gamepad1.dpad_left||gamepad1.dpad_right) {}
         svoRotate.setPosition(posSvo);
         telemetry.addData("pos", posSvo);

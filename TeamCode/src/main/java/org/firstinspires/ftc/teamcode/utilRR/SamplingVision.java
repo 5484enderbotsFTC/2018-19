@@ -142,7 +142,9 @@ public class SamplingVision {
                 } else {
                     mineralPos = 1; //centre
                 }
-                telemetry.addData("mineral pos", mineralPos);
+                if(telemetry!=null) {
+                    telemetry.addData("mineral pos", mineralPos);
+                }
             }
         }
         return mineralPos;

@@ -14,15 +14,8 @@ import org.firstinspires.ftc.teamcode.utilRR.SamplingVision;
 /**
  * Created by Avery on 10/26/18.
  */
-
-/*
-collector
-up - 0
-down - 0.61
-mid - 0.47
- */
-@Autonomous (name = "ClarksonNearAuto")
-public class ClarksonNearAuto extends LinearOpMode {
+@Autonomous (name = "UticaNearAuto")
+public class UticaNearAuto extends LinearOpMode {
     private DcMotor mtrHang;
     private DcMotor mtrExtend;
     private Servo svoRotate;
@@ -84,33 +77,29 @@ public class ClarksonNearAuto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        int posMineral = samplingVision.getMineral2XLeft();
         telemetry.addData("Status", "Unhanging");
-        telemetry.addData("Mineral position", posMineral);
         telemetry.update();
-        mtrHang.setPower(1);
+        //mtrHang.setPower(1);
         sleep(4000);
         mtrHang.setPower(0);
+        int posMineral = samplingVision.getMineral2XLeft();
 
         telemetry.addData("Status", "Sampling");
         telemetry.addData("Mineral position", posMineral);
         telemetry.update();
 
-        driveBase.drive(1,0);
-        svoRotate.setPosition(0.8);
-        sleep(200);
-        driveBase.drive(0,0);
 
-        driveBase.turnInPlace(30-(posMineral*30));
-        driveBase.drive(1,0);
-        sleep(1500);
-        driveBase.drive(-1,0);
-        svoRotate.setPosition(0);
-        sleep(1500);
-        driveBase.drive(0,0);
+        int signTurn;
+        signTurn = -1+posMineral;
+        driveBase.driveEncoder(200, this);
+        driveBase.turnInPlace(30*signTurn);
+        svoRotate.setPosition(0.61);
+        driveBase.driveEncoder(500, this);
+        driveBase.driveEncoder(-500, this);
+        driveBase.turnInPlace(-30*signTurn-90);
+        sleep(100);
         svoTapeRotate.setPosition(TAPEDOWN);
         svoTapeExtend.setPosition(TAPEOUT);
-        driveBase.turnInPlace(-30+(posMineral*30));
         sleep(20000);
 
 /*

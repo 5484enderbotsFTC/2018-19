@@ -18,7 +18,7 @@ public class DriveBaseTest extends LinearOpMode {
         driveBase = new DriveBase(hardwareMap,false);
         driveBase.initIMU();
         waitForStart();
-        driveBase.driveEncoder(500);
+        driveBase.driveEncoder(500, this);
         driveBase.turnInPlace(100);
     }
 }
