@@ -46,9 +46,9 @@ public class ClarksonTeleOp extends OpMode {
     static double DOWNWARD = 0;
     static double IN = 1;
     static double OUT = -1;
-    double DPOSITION = 0.55;
-    double CPOSITION = 0.45;
-    double SETPOSITION = 0.5;
+    double COLLECTOROUT = 0.55;
+    double COLLECTORUP = 0.45;
+    double COLLECTORIN = 0;
     static double COLLECT = 1;
     static double REVERSECOLLECT = 0;
     double posSvo = 0;
@@ -99,11 +99,17 @@ public class ClarksonTeleOp extends OpMode {
 
         if(gamepad1.left_trigger>0.5 && !limExtendHigh.isPressed()){
             mtrExtend.setPower(OUT);
+            svoRotate.setPosition(COLLECTOROUT);
         }
         else if(gamepad1.left_bumper && !limExtendLow.isPressed()){
-            mtrExtend.setPower(IN);}
+            mtrExtend.setPower(IN);
+            svoRotate.setPosition(COLLECTORUP);}
         else {
             mtrExtend.setPower(0);
+        }
+
+        if(limExtendLow.isPressed()) {
+            svoRotate.setPosition(COLLECTORIN);
         }
 
         //if(gamepad2.left_stick_y<.5 && !limDispenseHigh.isPressed()){
