@@ -77,7 +77,7 @@ public class ClarksonNearAuto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        int posMineral = samplingVision.getMineral();
+        int posMineral = samplingVision.getMineral2XLeft();
         telemetry.addData("Status", "Unhanging");
         telemetry.addData("Mineral position", posMineral);
         telemetry.update();

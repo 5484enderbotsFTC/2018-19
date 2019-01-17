@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.utilRR.SamplingVision;
+        import org.firstinspires.ftc.teamcode.utilRR.SamplingVision;
 
 
 @Autonomous (name = "TensorFlow Vision Test")
@@ -17,12 +17,9 @@ public class tfvisiontest extends LinearOpMode {
         samplingVision = new SamplingVision(hardwareMap,telemetry);
 
         while(opModeIsActive()){
-            //telemetry.addData("Mineral position", samplingVision.getMineral());
+            //telemetry.addData("Mineral position", samplingVision.getMineral3X());
             //telemetry.update();
-            samplingVision.getMineral();
+            samplingVision.getMineral2XLeft();
         }
     }
-
-
-
 }
