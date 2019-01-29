@@ -31,17 +31,9 @@ public class UticaTeleOp extends OpMode {
     private Servo svoTapeRotate;
     private Encoder encHang;
     private Servo svoTapeExtend;
-    private DcMotorSimple mtrDispense;
 
-
-    //private TouchSensor limHangLow;
-    //private TouchSensor limHangHigh;
-    //private TouchSensor limDispenseLow;
-    //private TouchSensor limDispenseHigh;
     //private TouchSensor limExtendLow;
     //private TouchSensor limExtendHigh;
-    private AnalogTouch limDispenseLow;
-    private AnalogTouch limDispenseHigh;
     private AnalogTouch limExtendLow;
     private AnalogTouch limExtendHigh;
 
@@ -65,7 +57,6 @@ public class UticaTeleOp extends OpMode {
         dispenser = new Dispenser(hardwareMap);
         hang = new Hang(hardwareMap);
 
-        mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
         mtrCollect = hardwareMap.get(DcMotorSimple.class,"mtrCollect");
