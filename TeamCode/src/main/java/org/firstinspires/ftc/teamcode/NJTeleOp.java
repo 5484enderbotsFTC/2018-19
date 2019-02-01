@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
+import org.firstinspires.ftc.teamcode.util.DriveBase;
 @TeleOp(name="NJTeleOp", group="K9bot")
 public class NJTeleOp extends OpMode{
-    org.firstinspires.ftc.teamcode.utilRR.DriveBase DriveBase;
+    org.firstinspires.ftc.teamcode.util.DriveBase DriveBase;
 
 
     @Override

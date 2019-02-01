@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.utilRR.AnalogTouch;
-import org.firstinspires.ftc.teamcode.utilRR.Dispenser;
-import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
-import org.firstinspires.ftc.teamcode.utilRR.Encoder;
-import org.firstinspires.ftc.teamcode.utilRR.Hang;
+import org.firstinspires.ftc.teamcode.util.AnalogTouch;
+import org.firstinspires.ftc.teamcode.util.Dispenser;
+import org.firstinspires.ftc.teamcode.util.DriveBase;
+import org.firstinspires.ftc.teamcode.util.Encoder;
+import org.firstinspires.ftc.teamcode.util.Hang;
 
 import static org.firstinspires.ftc.teamcode.ClarksonNearAuto.TAPEIN;
 

@@ -2,9 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
         import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-        import org.firstinspires.ftc.teamcode.utilRR.SamplingVision;
+        import org.firstinspires.ftc.teamcode.util.SamplingVision;
 
 
 @Autonomous (name = "TensorFlow Vision Test")

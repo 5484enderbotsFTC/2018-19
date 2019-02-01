@@ -11,12 +11,12 @@ public class Encoder {
     DcMotor motor;
     int offset;
 
-    public Encoder (DcMotor mtr) {
+    public Encoder(DcMotor mtr) {
         motor = mtr;
         offset = 0;
     }
     public int getEncValue(){
-        return motor.getCurrentPosition()-offset;
+        return -(motor.getCurrentPosition()-offset);
     }
     public void resetEncoder(){
         offset = motor.getCurrentPosition();
