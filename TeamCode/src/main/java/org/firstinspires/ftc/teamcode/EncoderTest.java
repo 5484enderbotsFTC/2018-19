@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
-import org.firstinspires.ftc.teamcode.utilRR.Encoder;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 
 @Autonomous (name = "Encoder Test")

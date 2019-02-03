@@ -1,8 +1,10 @@
+
 package org.firstinspires.ftc.teamcode.util;
+
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -10,58 +12,78 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import java.util.Arrays;
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by guinea on 11/5/17.
- */
+ * Jacked by Ted on October 27, 2018
+ **/
 
 public class DriveBase {
-    public DcMotor mtrFL;
-    public DcMotor mtrFR;
-    public DcMotor mtrBL;
-    public DcMotor mtrBR;
-    public Encoder encFL;
-    public Encoder encFR;
-    public Encoder encBL;
-    public Encoder encBR;
-//    BNO055IMU snsImu;
-    HardwareMap hardwareMap;
-    ModernRoboticsI2cGyro snsGyro;
+    public DcMotor mtrL;
+    public DcMotor mtrR;
+    public Encoder encL;
+    public Encoder encR;
+    public BNO055IMU snsImu;
+    private HardwareMap hardwareMap;
 
     double offset = 0;
     final double K_P = 0.01;
     public DriveBase(HardwareMap hardwareMap, boolean calibrate) {
         this.hardwareMap = hardwareMap;
-        mtrBL = hardwareMap.dcMotor.get("mtrBL");
-        mtrBR = hardwareMap.dcMotor.get("mtrBR");
-        mtrFL = hardwareMap.dcMotor.get("mtrFL");
-        mtrFR = hardwareMap.dcMotor.get("mtrFR");
+        mtrL = hardwareMap.dcMotor.get("mtrL");
+        mtrR = hardwareMap.dcMotor.get("mtrR");
+        mtrL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        /*mtrFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+        mtrL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mtrL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mtrR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        encFL = new Encoder(mtrFL);
-        encFR = new Encoder(mtrFL);
-        encBL = new Encoder(mtrFL);
-        encBR = new Encoder(mtrFL);
+        encL = new Encoder(mtrL);
+        encR = new Encoder(mtrR);
 
-//        if (useIMU) {
-//            snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
-//            if (calibrate)
-//                initIMU();
-//        } else {
-        snsGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "snsGyro");
+        snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
         if (calibrate)
-            initMRGyro();
-//        }
+            initIMU();
+
+
+    }
+    public void drive(double Y, double X){
+        double leftPower = -Y - X;
+        double rightPower = Y - X;
+        mtrL.setPower(leftPower);
+        mtrR.setPower(rightPower);
     }
 
-    private void initIMU() {
+    public void driveEncoder(double count, LinearOpMode opMode){
+        int sign = Integer.signum((int)count);
+        resetEncoders();
+        while (sign*encL.getEncValue()<sign*count && opMode.opModeIsActive()){
+            drive(sign, 0);
+        }
+        drive(0, 0);
+    }
+
+    public void turnInPlace(double rotation){
+        int sign = Integer.signum((int)rotation);
+        resetGyro();
+        double angle = 0;
+        if (rotation!=0) {
+            while (angle < Math.abs(rotation)) {
+                angle = Math.abs(getAngle());
+                drive(0, sign * Math.min((Math.abs(rotation) - angle) / (Math.abs(rotation)), 0.5));
+            }
+        }
+
+        drive(0,0);
+
+    }
+
+
+    public void initIMU() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -72,33 +94,23 @@ public class DriveBase {
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
-        // and named "imu".
-//        snsImu.initialize(parameters);
-    }
-
-    private void initMRGyro() {
-        snsGyro.calibrate();
-        while (snsGyro.isCalibrating()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {}
-        }
+        // and named "snsImu".
+        snsImu.initialize(parameters);
     }
 
     public double getAngle() {
-//        if (snsImu != null) {
-//            return snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset;
-//        } else {
-            return -snsGyro.getIntegratedZValue();
-//        }
+        if (snsImu != null) {
+            return (snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset);
+        } else {
+        return 0;
+        }
     }
 
     public void resetGyro() {
-//        if (snsImu != null) {
-//            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-//        } else {
-            snsGyro.resetZAxisIntegrator();
-//        }
+        if (snsImu != null) {
+            offset = snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+        } else {
+        }
     }
 
     public void resetDrive() {
@@ -106,46 +118,8 @@ public class DriveBase {
         resetEncoders();
     }
     public void resetEncoders() {
-        encFL.resetEncoder();
-        encFR.resetEncoder();
-        encBL.resetEncoder();
-        encBR.resetEncoder();
+        encL.resetEncoder();
+        encR.resetEncoder();
     }
 
-    public void drive(double magnitude, double angle) { drive(magnitude, angle, 0, 1); }
-    public void drive(double magnitude, double angle, double rotate) { drive(magnitude, angle, rotate, 1); }
-    public void drive(double magnitude, double angle, double rotate, double factor) {
-        double rad = Math.toRadians(angle);
-        driveArcade(magnitude * Math.sin(rad), magnitude * Math.cos(rad), rotate, factor);
-    }
-
-    public void driveArcade(double x1, double y1, double x2, double factor) {
-
-        double fl = (x1 + y1 + x2) / factor;
-        double fr = (x1 - y1 + x2) / factor;
-        double bl = (-x1 + y1 + x2) / factor;
-        double br = (-x1 - y1 + x2) / factor;
-        double[] powers = {
-                Math.abs(fl),
-                Math.abs(fr),
-                Math.abs(bl),
-                Math.abs(br),
-        };
-        Arrays.sort(powers);
-
-        if (powers[3] > 1) {
-            fl /= powers[3];
-            fr /= powers[3];
-            bl /= powers[3];
-            br /= powers[3];
-        }
-        setDrivePowers(fl, fr, bl, br);
-    }
-
-    public void setDrivePowers(double fl, double fr, double bl, double br) {
-        mtrFL.setPower(fl);
-        mtrFR.setPower(fr);
-        mtrBL.setPower(bl);
-        mtrBR.setPower(br);
-    }
 }

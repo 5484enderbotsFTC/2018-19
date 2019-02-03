@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.teamcode.utilRR.DriveBase;
-import org.firstinspires.ftc.teamcode.utilRR.Encoder;
+import org.firstinspires.ftc.teamcode.util.DriveBase;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
