@@ -87,11 +87,11 @@ public class UticaTeleOp extends OpMode {
 
         driveBase.drive(Y, X);
 
-        if(gamepad1.y) {
-            mtrDispense.setPower(-1);
-        }
-        else if(gamepad1.x) {
+        if(gamepad1.y || gamepad2.right_stick_y>0.5) {
             mtrDispense.setPower(1);
+        }
+        else if(gamepad1.x || gamepad2.right_stick_y<-0.5) {
+            mtrDispense.setPower(-1);
         }
         else {
             mtrDispense.setPower(0);
@@ -99,21 +99,47 @@ public class UticaTeleOp extends OpMode {
 
 
         if(gamepad2.right_stick_y>0.5 || gamepad1.a){// && !limHangHigh.isPressed())
-             hang.up();}
+             hang.down();}
         else if(gamepad2.right_stick_y<-0.5 || gamepad1.b){// && !limHangLow.isPressed()
-              hang.down();}
+              hang.up();}
         else {hang.stop();}
 
-        if(gamepad1.left_trigger>0.5 && !limExtendHigh.isPressed()){
+        if(gamepad1.left_bumper && !limExtendHigh.isPressed()){
             mtrExtend.setPower(-1);
         }
-        else if(gamepad1.left_bumper && !limExtendLow.isPressed()){
+        else if(gamepad1.left_trigger>0.5 && !limExtendLow.isPressed()){
             mtrExtend.setPower(1); }
         else {
             mtrExtend.setPower(0);
         }
 
-        if(gamepad2.a){driveBase.turnInPlace(180);}
+
+        if (gamepad1.dpad_up){posSvo=0.72;} else if (gamepad1.dpad_down){posSvo=0;} else if (gamepad1.dpad_left||gamepad2.dpad_right) {posSvo=0.490;}
+        //if (gamepad1.dpad_up && posSvo<=1){posSvo+=0.02;} else if (gamepad1.dpad_down && posSvo>=0){posSvo-=0.02;} else if (gamepad1.dpad_left||gamepad1.dpad_right) {}
+        svoRotate.setPosition(posSvo);
+        telemetry.addData("pos", posSvo);
+
+        //if (gamepad1.dpad_left){svoHang.setPosition(0);}
+        //if (gamepad1.dpad_right){svoHang.setPosition(1);}
+        //telemetry.addData("hang pos", encHang.getEncValue());
+
+        //if(gamepad1.right_trigger>0.5){mtrCollect.setPosition(COLLECT);}
+        //else if(gamepad1.right_bumper){mtrCollect.setPosition(REVERSECOLLECT);}
+        //else{mtrCollect.setPosition(0.5);}
+
+        if(gamepad1.right_trigger>0.5){
+            mtrCollect.setPower(1);}
+        else if(gamepad1.right_bumper){
+            mtrCollect.setPower(-1);}
+        else{
+            mtrCollect.setPower(0);}
+
+        if(gamepad1.left_bumper) {
+            svoTapeExtend.setPosition(0.08);}
+        else{
+            svoTapeExtend.setPosition(0.08);}
+
+
         telemetry.update();
     }
 

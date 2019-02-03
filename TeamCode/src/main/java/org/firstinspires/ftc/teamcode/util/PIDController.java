@@ -28,8 +28,8 @@ public class PIDController {
     }
 
     public double getPower(double currentValue){
-        errorPrev = this.error;
-        this.error = target - currentValue;
+        errorPrev = error;
+        error = target - currentValue;
         totalError+=error;
         return m_P*error + m_I*totalError + m_D*(error-errorPrev);
 
