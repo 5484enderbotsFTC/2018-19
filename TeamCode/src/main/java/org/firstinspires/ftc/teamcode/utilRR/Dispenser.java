@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Dispenser {
 
-    DcMotorSimple mtrDispenser;
+    DcMotorSimple mtrDispense;
 
     AnalogTouch limDispenseLow;
     AnalogTouch limDispenseHigh;
 
     public Dispenser(HardwareMap hardwareMap) {
-        mtrDispenser = hardwareMap.get(DcMotorSimple.class,"mtrDispenser");
+        mtrDispense = hardwareMap.get(DcMotorSimple.class,"mtrDispense");
         limDispenseLow = new AnalogTouch(hardwareMap, "limDispenseLow");
         limDispenseHigh = new AnalogTouch(hardwareMap, "limDispenseHigh");
 
@@ -36,12 +36,12 @@ public class Dispenser {
             mtrDispense.setPower(1);
         }
         */
-        mtrDispenser.setPower(-1);
+        mtrDispense.setPower(-1);
     }
     public void down(){
-        mtrDispenser.setPower(1);
+        mtrDispense.setPower(1);
     }
     public void stop(){
-        mtrDispenser.setPower(0);
+        mtrDispense.setPower(0);
     }
 }

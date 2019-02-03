@@ -21,16 +21,17 @@ import static org.firstinspires.ftc.teamcode.ClarksonNearAuto.TAPEIN;
 public class UticaTeleOp extends OpMode {
 
     private DriveBase driveBase;
-    private Dispenser dispenser;
+    private Dispenser dispense;
     private Hang hang;
 
     private DcMotor mtrHang;
-    private DcMotor mtrExtend;
+    private DcMotorSimple mtrExtend;
     private Servo svoRotate;
     private DcMotorSimple mtrCollect;
     private Servo svoTapeRotate;
     private Encoder encHang;
     private Servo svoTapeExtend;
+    private DcMotor mtrDispense;
 
     //private TouchSensor limExtendLow;
     //private TouchSensor limExtendHigh;
@@ -54,10 +55,11 @@ public class UticaTeleOp extends OpMode {
     @Override
     public void init() {
         driveBase = new DriveBase(hardwareMap,false);
-        dispenser = new Dispenser(hardwareMap);
+        dispense = new Dispenser(hardwareMap);
         hang = new Hang(hardwareMap);
 
-        mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
+        mtrDispense = hardwareMap.dcMotor.get("mtrDispense");
+        mtrExtend = hardwareMap.get(DcMotorSimple.class,"mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");
         mtrCollect = hardwareMap.get(DcMotorSimple.class,"mtrCollect");
         svoTapeRotate = hardwareMap.servo.get("svoTapeRotate");
@@ -86,20 +88,21 @@ public class UticaTeleOp extends OpMode {
         driveBase.drive(Y, X);
 
         if(gamepad1.y) {
-            dispenser.up();
+            mtrDispense.setPower(-1);
         }
         else if(gamepad1.x) {
-            dispenser.down();
+            mtrDispense.setPower(1);
         }
-        else {dispenser.stop();
+        else {
+            mtrDispense.setPower(0);
         }
 
 
-        if(gamepad2.right_stick_y>0.5 || gamepad1.a){// && !limHangHigh.isPressed()){
-            hang.up();}
-        else if(gamepad2.right_stick_y<-0.5 || gamepad1.b){// && !limHangLow.isPressed()){
-            hang.down();}
-        else{hang.stop();}
+        if(gamepad2.right_stick_y>0.5 || gamepad1.a){// && !limHangHigh.isPressed())
+             mtrHang.setPower(1);}
+        else if(gamepad2.right_stick_y<-0.5 || gamepad1.b){// && !limHangLow.isPressed())
+                 mtrHang.setPower(-1);}
+        else {mtrHang.setPower(0);}
 
         if(gamepad1.left_trigger>0.5 && !limExtendHigh.isPressed()){
             mtrExtend.setPower(OUT);
