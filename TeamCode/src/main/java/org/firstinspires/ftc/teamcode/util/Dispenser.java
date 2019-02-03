@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.util;
 
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Dispenser {
 
-    DcMotorSimple mtrDispense;
+    DcMotor mtrDispense;
 
     AnalogTouch limDispenseLow;
     AnalogTouch limDispenseHigh;
 
     public Dispenser(HardwareMap hardwareMap) {
-        mtrDispense = hardwareMap.get(DcMotorSimple.class,"mtrDispense");
+        mtrDispense = hardwareMap.dcMotor.get("mtrDispense");
         limDispenseLow = new AnalogTouch(hardwareMap, "limDispenseLow");
         limDispenseHigh = new AnalogTouch(hardwareMap, "limDispenseHigh");
 

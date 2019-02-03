@@ -10,7 +10,7 @@ public class Hang {
     //private TouchSensor limHangHigh;
 
     public Hang(HardwareMap hardwareMap) {
-    mtrHang = hardwareMap.get(DcMotor.class, "mtrHang");
+    mtrHang = hardwareMap.dcMotor.get("mtrHang");
         //limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
         //limHangLow = hardwareMap.touchSensor.get("limHangLow");
 
