@@ -21,25 +21,18 @@ public class Dispenser {
     }
 
     public void up(){
-        /*DispenseHigh = limDispenseHigh.isPressed() ? 0.5 : 1;
-        DispenseLow = limDispenseLow.isPressed() ? 0.5 : 0;
-        mtrDispense.setPower(
-                //Math.min(
-                //Math.max(
-                gamepad2.left_stick_y//,
-                //        DispenseLow),
-                //DispenseHigh)
-        );
-        if(gamepad1.y){
+        if (!limDispenseHigh.isPressed()){
             mtrDispense.setPower(-1);
-        } else if(gamepad1.x){
-            mtrDispense.setPower(1);
+        } else {
+            stop();
         }
-        */
-        mtrDispense.setPower(-1);
     }
     public void down(){
-        mtrDispense.setPower(1);
+        if (!limDispenseLow.isPressed()){
+            mtrDispense.setPower(1);
+        } else {
+            stop();
+        }
     }
     public void stop(){
         mtrDispense.setPower(0);

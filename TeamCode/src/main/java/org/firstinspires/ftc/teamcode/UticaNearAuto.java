@@ -7,53 +7,27 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.util.AnalogTouch;
+import org.firstinspires.ftc.teamcode.util.Collector;
+import org.firstinspires.ftc.teamcode.util.Dispenser;
 import org.firstinspires.ftc.teamcode.util.DriveBase;
 import org.firstinspires.ftc.teamcode.util.Encoder;
+import org.firstinspires.ftc.teamcode.util.Hang;
 import org.firstinspires.ftc.teamcode.util.SamplingVision;
+import org.firstinspires.ftc.teamcode.util.Tape;
 
 /**
  * Created by Avery on 10/26/18.
  */
 @Autonomous (name = "UticaNearAuto")
 public class UticaNearAuto extends LinearOpMode {
-    private DcMotor mtrHang;
-    private DcMotor mtrExtend;
-    private Servo svoRotate;
-    private DcMotorSimple mtrCollect;
+
     private DriveBase driveBase;
-    private Servo svoTapeRotate;
-    private Encoder encHang;
-    private Servo svoTapeExtend;
-    private DcMotorSimple mtrDispense;
-
-
-    //private TouchSensor limHangLow;
-    //private TouchSensor limHangHigh;
-    //private TouchSensor limDispenseLow;
-    //private TouchSensor limDispenseHigh;
-    //private TouchSensor limExtendLow;
-    //private TouchSensor limExtendHigh;
-    private AnalogTouch limDispenseLow;
-    private AnalogTouch limDispenseHigh;
-    private AnalogTouch limExtendLow;
-    private AnalogTouch limExtendHigh;
+    private Dispenser dispenser;
+    private Collector collector;
+    private Hang hang;
+    private Tape tape;
 
     SamplingVision samplingVision;
-
-
-    static double UPWARD = 1;
-    static double DOWNWARD = 0;
-    static double IN = -1;
-    static double OUT = 1;
-    double DPOSITION = 0.55;
-    double CPOSITION = 0.45;
-    double SETPOSITION = 0.5;
-    static double COLLECT = 1;
-    static double REVERSECOLLECT = 0;
-    static double TAPEIN = 0.08;
-    static double TAPEOUT = 0.4;
-    static double TAPEDOWN = 0.43;
-    static double TAPEUP = 0.73;
 
 
 
@@ -63,16 +37,13 @@ public class UticaNearAuto extends LinearOpMode {
         telemetry.update();
 
         driveBase = new DriveBase(hardwareMap,false);
+        dispenser = new Dispenser(hardwareMap);
+        collector = new Collector(hardwareMap);
+        hang = new Hang(hardwareMap);
+        tape = new Tape(hardwareMap);
 
-
-        mtrHang = hardwareMap.dcMotor.get("mtrHang");
-        mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
-        svoRotate = hardwareMap.servo.get("svoRotate");
-        mtrCollect = hardwareMap.get(DcMotorSimple.class,"mtrCollect");
-        svoTapeRotate = hardwareMap.servo.get("svoTapeRotate");
-        svoTapeExtend = hardwareMap.servo.get("svoTapeExtend");
-        mtrDispense = hardwareMap.get(DcMotorSimple.class,"mtrDispense");
         driveBase.initIMU();
+
         samplingVision = new SamplingVision(hardwareMap);
 
         telemetry.addData("Status", "Initialised");
@@ -81,9 +52,9 @@ public class UticaNearAuto extends LinearOpMode {
 
         telemetry.addData("Status", "Unhanging");
         telemetry.update();
-        //mtrHang.setPower(1);
+        //hang.down();
         sleep(4000);
-        mtrHang.setPower(0);
+        hang.stop();
         int posMineral = samplingVision.getMineral2XLeft();
 
         telemetry.addData("Status", "Sampling");
@@ -95,13 +66,13 @@ public class UticaNearAuto extends LinearOpMode {
         signTurn = -1+posMineral;
         driveBase.driveEncoder(200, this);
         driveBase.turnInPlace(30*signTurn);
-        svoRotate.setPosition(0.61);
+        tape.rotateMid();
         driveBase.driveEncoder(500, this);
         driveBase.driveEncoder(-500, this);
         driveBase.turnInPlace(-30*signTurn-90);
         sleep(100);
-        svoTapeRotate.setPosition(TAPEDOWN);
-        svoTapeExtend.setPosition(TAPEOUT);
+        tape.rotateDown();
+        tape.out();
         sleep(20000);
 
 /*
