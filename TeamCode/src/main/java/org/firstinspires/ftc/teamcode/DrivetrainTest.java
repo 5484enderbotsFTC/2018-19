@@ -32,20 +32,20 @@ public class DrivetrainTest extends LinearOpMode {
         appendLog("dab");
         mtrBL.setPower(1);
         mtrBR.setPower(1);
-        mtrFL.setPower(1);
-        mtrFR.setPower(1);
+        //mtrFL.setPower(1);
+        //mtrFR.setPower(1);
         float t;
         for (int i=0;i<11;i++){
-            t=(float)i/2;
+            t=(float)i/4;
 
             appendLog("time:"+String.valueOf(t));
             appendLog("encoder value:"+String.valueOf(encFL.getEncValue()));
-            sleep(500);
+            sleep(250);
         }
         mtrBL.setPower(0);
         mtrBR.setPower(0);
-        mtrFL.setPower(0);
-        mtrFR.setPower(0);
+        //mtrFL.setPower(0);
+        //mtrFR.setPower(0);
     }
 
 

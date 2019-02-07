@@ -20,18 +20,22 @@ public class Collector {
         limExtendHigh = new AnalogTouch(hardwareMap, "limExtendHigh");
     }
 
-    public void slideIn(){
+    public boolean slideIn(){
         if (!limExtendHigh.isPressed()){
             mtrSlide.setPower(-1);
+            return(false);
         } else {
             slideStop();
+            return(true);
         }
     }
-    public void slideOut(){
+    public boolean slideOut(){
         if (!limExtendLow.isPressed()){
             mtrSlide.setPower(1);
+            return(false);
         } else {
             slideStop();
+            return(true);
         }
     }
     public void slideStop(){

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Hang {
     DcMotor mtrHang;
-
+    public Encoder encHang;
     //private TouchSensor limHangLow;
     //private TouchSensor limHangHigh;
 
@@ -13,7 +13,7 @@ public class Hang {
     mtrHang = hardwareMap.dcMotor.get("mtrHang");
         //limHangHigh = hardwareMap.touchSensor.get("limHangHigh");
         //limHangLow = hardwareMap.touchSensor.get("limHangLow");
-
+    encHang = new Encoder(mtrHang);
     }
 
     public void up(){
@@ -26,6 +26,10 @@ public class Hang {
 
     public void stop(){
         mtrHang.setPower(0);
+    }
+
+    public void hang(){
+
     }
 }
 

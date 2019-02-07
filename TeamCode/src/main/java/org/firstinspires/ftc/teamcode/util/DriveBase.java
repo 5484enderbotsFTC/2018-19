@@ -67,6 +67,15 @@ public class DriveBase {
         drive(0, 0);
     }
 
+    public void driveCurve(double count, double X, double Y, LinearOpMode opMode){
+        int sign = Integer.signum((int)count);
+        resetEncoders();
+        while (sign*encL.getEncValue()<sign*count && opMode.opModeIsActive()){
+            drive(Y, X);
+        }
+        drive(0, 0);
+    }
+
     public void turnInPlace(double rotation){
         int sign = Integer.signum((int)rotation);
         resetGyro();
@@ -80,6 +89,18 @@ public class DriveBase {
 
         drive(0,0);
 
+    }
+    public void turnTank(double rotation, double X, double Y){
+        int sign = Integer.signum((int)rotation);
+        resetGyro();
+        double angle = 0;
+        if (rotation!=0) {
+            while (angle < Math.abs(rotation)) {
+                angle = Math.abs(getAngle());
+                drive(Y, X);
+            }
+        }
+        drive(0,0);
     }
 
 

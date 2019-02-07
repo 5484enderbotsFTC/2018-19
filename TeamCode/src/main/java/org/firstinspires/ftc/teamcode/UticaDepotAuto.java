@@ -2,24 +2,22 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.util.AnalogTouch;
 import org.firstinspires.ftc.teamcode.util.Collector;
 import org.firstinspires.ftc.teamcode.util.Dispenser;
 import org.firstinspires.ftc.teamcode.util.DriveBase;
-import org.firstinspires.ftc.teamcode.util.Encoder;
+import org.firstinspires.ftc.teamcode.util.Functions;
 import org.firstinspires.ftc.teamcode.util.Hang;
 import org.firstinspires.ftc.teamcode.util.SamplingVision;
 import org.firstinspires.ftc.teamcode.util.Tape;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by Avery on 10/26/18.
  */
-@Autonomous (name = "UticaNearAuto")
-public class UticaNearAuto extends LinearOpMode {
+@Autonomous (name = "UticaDepotAuto")
+public class UticaDepotAuto extends LinearOpMode {
 
     private DriveBase driveBase;
     private Dispenser dispenser;
@@ -52,28 +50,51 @@ public class UticaNearAuto extends LinearOpMode {
 
         telemetry.addData("Status", "Unhanging");
         telemetry.update();
-        //hang.down();
-        sleep(4000);
-        hang.stop();
-        int posMineral = samplingVision.getMineral2XLeft();
-
-        telemetry.addData("Status", "Sampling");
-        telemetry.addData("Mineral position", posMineral);
-        telemetry.update();
-
-
-        int signTurn;
-        signTurn = -1+posMineral;
-        driveBase.driveEncoder(200, this);
-        driveBase.turnInPlace(30*signTurn);
+        hang.up();
         tape.rotateMid();
-        driveBase.driveEncoder(500, this);
-        driveBase.driveEncoder(-500, this);
-        driveBase.turnInPlace(-30*signTurn-90);
-        sleep(100);
         tape.rotateDown();
         tape.out();
-        sleep(20000);
+        sleep(3000);
+        hang.stop();
+
+        telemetry.addData("Status","Placing marker");
+        telemetry.update();
+        driveBase.driveEncoder(50, this);
+        hang.down();
+        driveBase.driveEncoder(300,this);
+        hang.stop();
+        while(!collector.slideOut() && opModeIsActive()){
+            collector.slideOut();
+        }
+        collector.slideStop();
+        collector.collectorOut();
+        sleep(1000);
+        collector.collectStop();
+        collector.collectorIn();
+        while(!collector.slideIn() && opModeIsActive()){
+            collector.slideIn();
+        }
+        collector.collectStop();
+        driveBase.driveEncoder(-300,this);
+
+
+        //sample
+        tape.in();
+        Functions.sample(this, samplingVision, driveBase, collector);
+
+
+        driveBase.turnTank(75,-1, 1);
+        driveBase.drive(0,0);
+        sleep(100);
+        driveBase.driveEncoder(700,this);
+        driveBase.drive(0,0);
+        sleep(100);
+        driveBase.turnTank(40,-1, 1);
+        while(!collector.slideOut() && opModeIsActive()){
+            collector.slideOut();
+        }
+        collector.collectorOut();
+
 
 /*
         driveBase.drive(-1, 0);

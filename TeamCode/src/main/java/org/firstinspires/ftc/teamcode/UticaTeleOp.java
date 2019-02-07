@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.util.Collector;
 import org.firstinspires.ftc.teamcode.util.Dispenser;
 import org.firstinspires.ftc.teamcode.util.DriveBase;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 import org.firstinspires.ftc.teamcode.util.Hang;
 import org.firstinspires.ftc.teamcode.util.Tape;
 
@@ -85,7 +86,7 @@ public class UticaTeleOp extends OpMode {
             collector.collectOut();}
         else{
             collector.collectStop();}
-
+        telemetry.addData("hang encoder",hang.encHang.getEncValue());
         telemetry.update();
     }
 
