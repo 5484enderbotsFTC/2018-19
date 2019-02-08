@@ -33,7 +33,7 @@ public class UticaTeleOp extends OpMode {
     }
 
     public void start() {
-        tape.in();
+        tape.out();
     }
 
     public void loop() {
