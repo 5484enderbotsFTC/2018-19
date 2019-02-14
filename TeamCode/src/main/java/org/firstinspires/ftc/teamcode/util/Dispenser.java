@@ -29,7 +29,7 @@ public class Dispenser {
     }
     public void down(){
         if (!limDispenseLow.isPressed()){
-            mtrDispense.setPower(1);
+            mtrDispense.setPower(0.5);
         } else {
             stop();
         }
