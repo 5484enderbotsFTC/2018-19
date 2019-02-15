@@ -51,10 +51,13 @@ public class UticaDepotAuto extends LinearOpMode {
         telemetry.addData("Status", "Unhanging");
         telemetry.update();
         hang.up();
-        tape.rotateMid();
-        tape.rotateDown();
-        tape.out();
-        sleep(3000);
+        sleep(1500);
+        hang.down();
+        sleep(600);
+        hang.up();
+        sleep(500);
+        hang.down();
+        sleep(600);
         hang.stop();
 
         telemetry.addData("Status","Placing marker");
@@ -79,7 +82,6 @@ public class UticaDepotAuto extends LinearOpMode {
 
 
         //sample
-        tape.in();
         Functions.sample(this, samplingVision, driveBase, collector);
 
 
@@ -93,6 +95,7 @@ public class UticaDepotAuto extends LinearOpMode {
         while(!collector.slideOut() && opModeIsActive()){
             collector.slideOut();
         }
+        collector.slideStop();
         collector.collectorOut();
 
 
