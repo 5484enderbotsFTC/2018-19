@@ -34,6 +34,7 @@ public class UticaTeleOp extends OpMode {
 
     public void start() {
         tape.out();
+        tape.rotateUp();
     }
 
     public void loop() {
@@ -43,10 +44,10 @@ public class UticaTeleOp extends OpMode {
 
         driveBase.drive(Y, X);
 
-        if(gamepad1.y || gamepad2.right_stick_y>0.5) {
+        if(gamepad1.y || gamepad2.left_stick_y>0.5) {
             dispenser.down();
         }
-        else if(gamepad1.x || gamepad2.right_stick_y<-0.5) {
+        else if(gamepad1.x || gamepad2.left_stick_y<-0.5) {
             dispenser.up();
         }
         else {

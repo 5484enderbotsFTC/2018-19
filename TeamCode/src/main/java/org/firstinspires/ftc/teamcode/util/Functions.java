@@ -8,9 +8,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Functions {
     public static void sample(LinearOpMode opMode, SamplingVision samplingVision, DriveBase driveBase, Collector collector){
+        int posMineral = samplingVision.getMineral2XLeft();
+        sample(opMode, samplingVision, driveBase, collector, posMineral);
+
+    }
+    public static void sample(LinearOpMode opMode, SamplingVision samplingVision, DriveBase driveBase, Collector collector, int posMineral){
         Telemetry telemetry = opMode.telemetry;
 
-        int posMineral = samplingVision.getMineral2XLeft();
+
         telemetry.addData("Status", "Sampling");
         telemetry.addData("Mineral position", posMineral);
         telemetry.update();

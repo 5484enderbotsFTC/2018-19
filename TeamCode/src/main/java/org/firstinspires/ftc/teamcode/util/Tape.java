@@ -11,19 +11,19 @@ public class Tape {
         svoExtend = hardwareMap.servo.get("svoTapeExtend");
     }
     public void rotateUp(){
-        svoRotate.setPosition(0.78);
+        svoExtend.setPosition(0);
     }
     public void rotateMid(){
-        svoRotate.setPosition(0.43);
+        svoExtend.setPosition(0.5);
     }
     public void rotateDown(){
-        svoRotate.setPosition(0.27);
+        svoExtend.setPosition(1);
     }
     public void in(){
-        svoRotate.setPosition(0.08);
+        svoRotate.setPosition(0.8);
     }
     public void out(){
-
+        svoRotate.setPosition(0.04);
     }
 
 }
