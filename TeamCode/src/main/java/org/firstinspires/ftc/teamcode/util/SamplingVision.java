@@ -36,7 +36,6 @@ public class SamplingVision {
      */
     private TFObjectDetector tfod;
 
-    boolean focusModeSet;
 
     public SamplingVision(HardwareMap hardwareMap){
         this(hardwareMap, null);
@@ -49,12 +48,14 @@ public class SamplingVision {
         initVuforia();
         initTfod();
 
-        this.focusModeSet = CameraDevice.getInstance().setFocusMode(
+        boolean focusModeSet;
+
+        focusModeSet = CameraDevice.getInstance().setFocusMode(
                 CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO);
         if(!focusModeSet){
             Log.d("Sample Log Tag", "Failed to set focus mode (unsupported mode).");
         }
-        /** Activate Tensor Flow Object Detection. */
+        /** Activate TensorFlow Object Detection. */
 
         if (tfod != null) {
             tfod.activate();

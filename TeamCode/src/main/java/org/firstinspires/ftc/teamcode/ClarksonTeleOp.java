@@ -57,7 +57,7 @@ public class ClarksonTeleOp extends OpMode {
 
     @Override
     public void init() {
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap);
         mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");

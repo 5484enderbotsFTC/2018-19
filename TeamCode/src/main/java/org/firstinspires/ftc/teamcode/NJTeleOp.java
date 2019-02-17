@@ -12,7 +12,7 @@ public class NJTeleOp extends OpMode{
 
     @Override
     public void init() {
-        DriveBase = new DriveBase(hardwareMap,false);
+        DriveBase = new DriveBase(hardwareMap);
     }
 
     public void start() {

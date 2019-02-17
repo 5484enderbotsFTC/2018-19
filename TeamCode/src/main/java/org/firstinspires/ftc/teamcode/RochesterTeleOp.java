@@ -46,7 +46,7 @@ public class RochesterTeleOp extends OpMode {
 
     @Override
     public void init() {
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap);
         svoHang = hardwareMap.servo.get("mtrHang");
         mtrCollectSlide = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");

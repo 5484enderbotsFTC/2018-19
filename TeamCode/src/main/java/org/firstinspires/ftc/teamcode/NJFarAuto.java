@@ -21,7 +21,7 @@ public class NJFarAuto extends LinearOpMode {
     double IN = 0;
     @Override
     public void runOpMode(){
-    DriveBase = new DriveBase(hardwareMap,false);
+    DriveBase = new DriveBase(hardwareMap,this);
     mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
     svoExtend = hardwareMap.servo.get("svoExtend");
     svoRotate = hardwareMap.servo.get("svoRotate");

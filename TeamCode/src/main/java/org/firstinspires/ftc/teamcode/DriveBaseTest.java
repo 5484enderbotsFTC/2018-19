@@ -14,10 +14,10 @@ public class DriveBaseTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap,this);
         driveBase.initIMU();
         waitForStart();
-        driveBase.driveEncoder(500, this);
+        driveBase.driveEncoder(500);
         driveBase.turnInPlace(100);
     }
 }

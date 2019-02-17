@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.util.Collector;
 import org.firstinspires.ftc.teamcode.util.Dispenser;
 import org.firstinspires.ftc.teamcode.util.DriveBase;
-import org.firstinspires.ftc.teamcode.util.Functions;
 import org.firstinspires.ftc.teamcode.util.Hang;
 import org.firstinspires.ftc.teamcode.util.SamplingVision;
 import org.firstinspires.ftc.teamcode.util.Tape;
@@ -32,7 +31,7 @@ public class UticaDoubleSample extends LinearOpMode {
         telemetry.addData("Status", "Initialising");
         telemetry.update();
 
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap,this);
         dispenser = new Dispenser(hardwareMap);
         collector = new Collector(hardwareMap);
         hang = new Hang(hardwareMap);
@@ -55,7 +54,7 @@ public class UticaDoubleSample extends LinearOpMode {
         sleep(3000);
         hang.stop();
 
-      driveBase.driveEncoder(200,this);
+      driveBase.driveEncoder(200);
       driveBase.turnInPlace(90);
         int posMineral = samplingVision.getMineral2XLeft();
         telemetry.addData("Status", "Sampling");

@@ -29,7 +29,7 @@ public class RochesterAutoCrater extends LinearOpMode {
     double tapeDown = 0;
 @Override
     public void runOpMode(){
-    driveBase = new DriveBase(hardwareMap,false);
+    driveBase = new DriveBase(hardwareMap,this);
     svoHang = hardwareMap.servo.get("mtrHang");
     svoTape = hardwareMap.servo.get("svoTapeRotate");
     mtrTape = hardwareMap.dcMotor.get("svoTapeExtend");

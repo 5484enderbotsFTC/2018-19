@@ -24,7 +24,7 @@ public class UticaTeleOp extends OpMode {
 
     @Override
     public void init() {
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap);
         dispenser = new Dispenser(hardwareMap);
         collector = new Collector(hardwareMap);
         hang = new Hang(hardwareMap);

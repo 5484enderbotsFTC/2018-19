@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.util;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,11 +29,24 @@ public class DriveBase {
     public Encoder encR;
     public BNO055IMU snsImu;
     private HardwareMap hardwareMap;
+    private LinearOpMode opMode;
 
     double offset = 0;
     final double K_P = 0.01;
-    public DriveBase(HardwareMap hardwareMap, boolean calibrate) {
+
+    public DriveBase(HardwareMap hardwareMap){
+        /**
+         * Use this for TeleOp (Not required to be interruptible)
+         */
+        this(hardwareMap, null);
+    }
+
+    public DriveBase(HardwareMap hardwareMap, LinearOpMode opMode) {
+        /**
+         * Use this for Autonomous (OpMode allows interrupt)
+         */
         this.hardwareMap = hardwareMap;
+        this.opMode = opMode;
         mtrL = hardwareMap.dcMotor.get("mtrL");
         mtrR = hardwareMap.dcMotor.get("mtrR");
         mtrL.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -46,8 +60,6 @@ public class DriveBase {
         encR = new Encoder(mtrR);
 
         snsImu = hardwareMap.get(BNO055IMU.class, "snsImu");
-        if (calibrate)
-            initIMU();
 
 
     }
@@ -58,19 +70,19 @@ public class DriveBase {
         mtrR.setPower(rightPower);
     }
 
-    public void driveEncoder(double count, LinearOpMode opMode){
+    public void driveEncoder(double count){
         int sign = Integer.signum((int)count);
         resetEncoders();
-        while (sign*encL.getEncValue()<sign*count && opMode.opModeIsActive()){
+        while (sign*encL.getEncValue()<sign*count && opModeIsActive()){
             drive(sign, 0);
         }
         drive(0, 0);
     }
 
-    public void driveCurve(double count, double X, double Y, LinearOpMode opMode){
+    public void driveCurve(double count, double X, double Y){
         int sign = Integer.signum((int)count);
         resetEncoders();
-        while (sign*encL.getEncValue()<sign*count && opMode.opModeIsActive()){
+        while (sign*encL.getEncValue()<sign*count && opModeIsActive()){
             drive(Y, X);
         }
         drive(0, 0);
@@ -95,7 +107,7 @@ public class DriveBase {
         resetGyro();
         double angle = 0;
         if (rotation!=0) {
-            while (angle < Math.abs(rotation)) {
+            while (angle < Math.abs(rotation) && opModeIsActive()) {
                 angle = Math.abs(getAngle());
                 drive(Y, X);
             }
@@ -124,6 +136,14 @@ public class DriveBase {
             return (snsImu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - offset);
         } else {
         return 0;
+        }
+    }
+
+    private boolean opModeIsActive(){
+        if(opMode!=null){
+            return opMode.opModeIsActive();
+        } else {
+            return true;
         }
     }
 

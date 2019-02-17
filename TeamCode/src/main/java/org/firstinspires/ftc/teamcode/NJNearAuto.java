@@ -21,7 +21,7 @@ public class NJNearAuto extends LinearOpMode {
     double IN = 0;
 @Override
     public void runOpMode(){
-    driveBase = new DriveBase(hardwareMap,false);
+    driveBase = new DriveBase(hardwareMap,this);
     mtrCollect = hardwareMap.dcMotor.get("mtrCollect");
     svoExtend = hardwareMap.servo.get("svoExtend");
     svoRotate = hardwareMap.servo.get("svoRotate");

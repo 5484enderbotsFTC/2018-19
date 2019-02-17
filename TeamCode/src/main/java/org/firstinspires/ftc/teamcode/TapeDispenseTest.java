@@ -32,7 +32,7 @@ public class TapeDispenseTest extends LinearOpMode {
         telemetry.addData("Status", "Initialising");
         telemetry.update();
 
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap,this);
         dispenser = new Dispenser(hardwareMap);
         collector = new Collector(hardwareMap);
         hang = new Hang(hardwareMap);

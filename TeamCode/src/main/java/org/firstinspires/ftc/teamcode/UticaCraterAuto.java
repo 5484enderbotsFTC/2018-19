@@ -32,7 +32,8 @@ public class UticaCraterAuto extends LinearOpMode {
         telemetry.addData("Status", "Initialising");
         telemetry.update();
 
-        driveBase = new DriveBase(hardwareMap,false);
+
+        driveBase = new DriveBase(hardwareMap,this);
         dispenser = new Dispenser(hardwareMap);
         collector = new Collector(hardwareMap);
         hang = new Hang(hardwareMap);
@@ -61,25 +62,25 @@ public class UticaCraterAuto extends LinearOpMode {
         hang.stop();
         driveBase.drive(0,0);
         //sample
-        driveBase.driveEncoder(50, this);
+        driveBase.driveEncoder(50);
         hang.down();
-        Functions.sample(this, samplingVision, driveBase, collector);
+        Functions.sample(this, driveBase, collector, samplingVision);
         //drive to wall
-        driveBase.turnTank(75,-1, 1);
+        driveBase.turnTank(75, -1, 1);
         driveBase.drive(0,0);
         sleep(100);
-        driveBase.driveEncoder(800,this);
+        driveBase.driveEncoder(800);
         driveBase.drive(0,0);
         sleep(100);
         driveBase.turnTank(40,-1, 1);
         //tape measure marker stuff
         tape.in();
         tape.rotateMid();
-        driveBase.driveEncoder(-200,this);
+        driveBase.driveEncoder(-200);
         sleep(9000);
         tape.rotateDown();
         tape.out();
-        driveBase.driveEncoder(-400,this);
+        driveBase.driveEncoder(-400);
     }
 
     }

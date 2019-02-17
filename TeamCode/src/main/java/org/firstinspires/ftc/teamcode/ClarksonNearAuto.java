@@ -69,7 +69,7 @@ public class ClarksonNearAuto extends LinearOpMode {
         telemetry.addData("Status", "Initialising");
         telemetry.update();
 
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap,this);
         mtrHang = hardwareMap.dcMotor.get("mtrHang");
         mtrExtend = hardwareMap.dcMotor.get("mtrExtend");
         svoRotate = hardwareMap.servo.get("svoRotate");

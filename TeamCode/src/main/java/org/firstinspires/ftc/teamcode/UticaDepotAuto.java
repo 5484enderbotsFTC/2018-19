@@ -34,7 +34,7 @@ public class UticaDepotAuto extends LinearOpMode {
         telemetry.addData("Status", "Initialising");
         telemetry.update();
 
-        driveBase = new DriveBase(hardwareMap,false);
+        driveBase = new DriveBase(hardwareMap,this);
         dispenser = new Dispenser(hardwareMap);
         collector = new Collector(hardwareMap);
         hang = new Hang(hardwareMap);
@@ -64,17 +64,15 @@ public class UticaDepotAuto extends LinearOpMode {
         driveBase.drive(0,0);
 
         int posMineral = samplingVision.getMineral2XLeft();
-        telemetry.addData("Status", "Sampling");
+        telemetry.addData("Status", "Unhanging");
         telemetry.addData("Mineral position", posMineral);
         telemetry.update();
-        int signTurn;
-        signTurn = -1+posMineral;
 
         telemetry.addData("Status","Placing marker");
         telemetry.update();
-        driveBase.driveEncoder(50, this);
+        driveBase.driveEncoder(50);
         hang.down();
-        driveBase.driveEncoder(300,this);
+        driveBase.driveEncoder(300);
         hang.stop();
         while(!collector.slideOut() && opModeIsActive()){
             collector.slideOut();
@@ -88,30 +86,18 @@ public class UticaDepotAuto extends LinearOpMode {
             collector.slideIn();
         }
         collector.collectStop();
-        driveBase.driveEncoder(-300,this);
+        driveBase.driveEncoder(-300);
 
-
+        telemetry.addData("Status", "Sampling");
+        telemetry.addData("Mineral position", posMineral);
         //sample
-        driveBase.turnInPlace(30*signTurn);
-        collector.collectorOut();
-        collector.collectOut();
-        while(!collector.slideOut() && opModeIsActive()){
-            collector.slideOut();
-        }
-        collector.slideStop();
-        while(!collector.slideIn() && opModeIsActive()){
-            collector.slideIn();
-        }
-        collector.slideStop();
-        collector.collectStop();
-        collector.collectorIn();
-        driveBase.turnInPlace(-30*signTurn);
+        Functions.sample(this, driveBase, collector, posMineral);
 
-//drive to crater
+        //drive to crater
         driveBase.turnTank(75,-1, 1);
         driveBase.drive(0,0);
         sleep(100);
-        driveBase.driveEncoder(800,this);
+        driveBase.driveEncoder(800);
         driveBase.drive(0,0);
         sleep(100);
         driveBase.turnTank(40,-1, 1);
@@ -120,22 +106,5 @@ public class UticaDepotAuto extends LinearOpMode {
         }
         collector.slideStop();
         collector.collectorOut();
-
-
-/*
-        driveBase.drive(-1, 0);
-        sleep(800);
-        svoTapeRotate.setPosition(TAPEDOWN);
-        driveBase.drive(1, 0 );
-        sleep(700);
-        driveBase.drive(-1, 0);
-        sleep(1500);
-        driveBase.drive(0, 0);
-        svoTapeExtend.setPosition(TAPEOUT);
-        driveBase.drive(0.4, 0);
-        sleep(2000);
-        svoTapeExtend.setPosition(TAPEIN);
-        driveBase.drive(0, 0);
-        */
     }
 }

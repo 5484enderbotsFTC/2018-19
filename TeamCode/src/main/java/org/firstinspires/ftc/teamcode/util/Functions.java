@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 public class Functions {
-    public static void sample(LinearOpMode opMode, SamplingVision samplingVision, DriveBase driveBase, Collector collector){
+    public static void sample(LinearOpMode opMode, DriveBase driveBase, Collector collector, SamplingVision samplingVision){
         int posMineral = samplingVision.getMineral2XLeft();
-        sample(opMode, samplingVision, driveBase, collector, posMineral);
+        sample(opMode, driveBase, collector, posMineral);
 
     }
-    public static void sample(LinearOpMode opMode, SamplingVision samplingVision, DriveBase driveBase, Collector collector, int posMineral){
+    public static void sample(LinearOpMode opMode, DriveBase driveBase, Collector collector, int posMineral){
         Telemetry telemetry = opMode.telemetry;
 
 
