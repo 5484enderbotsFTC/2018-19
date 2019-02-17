@@ -51,36 +51,36 @@ public class UticaCraterAuto extends LinearOpMode {
         telemetry.update();
         driveBase.drive(0.5,0);
         hang.up();
-        sleep(1500);
+        sleep(2000);
         hang.down();
         sleep(600);
         hang.up();
         driveBase.drive(-1,0);
         sleep(500);
         hang.down();
-        sleep(1000);
+        sleep(1500);
         hang.stop();
         driveBase.drive(0,0);
+        sleep(1000);
         //sample
         driveBase.driveEncoder(50);
         hang.down();
         Functions.sample(this, driveBase, collector, samplingVision);
         //drive to wall
-        driveBase.turnTank(75, -1, 1);
+        driveBase.turnTank(65, -1, 1);
         driveBase.drive(0,0);
         sleep(100);
-        driveBase.driveEncoder(800);
+        driveBase.driveEncoder(750);
         driveBase.drive(0,0);
         sleep(100);
-        driveBase.turnTank(40,-1, 1);
+        driveBase.turnTank(55,-1, 1);
         //tape measure marker stuff
         tape.in();
-        tape.rotateMid();
-        driveBase.driveEncoder(-200);
+        tape.rotateDown();
         sleep(9000);
         tape.rotateDown();
         tape.out();
-        driveBase.driveEncoder(-400);
+        driveBase.driveEncoder(-700);
     }
 
     }

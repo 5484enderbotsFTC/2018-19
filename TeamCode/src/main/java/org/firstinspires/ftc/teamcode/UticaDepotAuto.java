@@ -52,7 +52,7 @@ public class UticaDepotAuto extends LinearOpMode {
         telemetry.update();
         driveBase.drive(0.5,0);
         hang.up();
-        sleep(1500);
+        sleep(2000);
         hang.down();
         sleep(600);
         hang.up();

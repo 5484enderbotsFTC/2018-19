@@ -20,6 +20,9 @@ public class Functions {
         telemetry.update();
         int signTurn;
         signTurn = -1+posMineral;
+        if(posMineral==-1){
+            signTurn = 0;
+        }
 
         driveBase.turnInPlace(30*signTurn);
         collector.collectorOut();
