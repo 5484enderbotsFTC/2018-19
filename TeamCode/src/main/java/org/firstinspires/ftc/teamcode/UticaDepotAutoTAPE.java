@@ -54,6 +54,7 @@ public class UticaDepotAutoTAPE extends LinearOpMode {
         hang.down();
         sleep(600);
         hang.up();
+        
         driveBase.drive(-1,0);
         sleep(500);
         hang.down();
@@ -70,7 +71,8 @@ public class UticaDepotAutoTAPE extends LinearOpMode {
         tape.rotateDown();
         sleep(10000);
         tape.out();
-        sleep(1000);
+        driveBase.driveEncoder(300);
+        driveBase.driveEncoder(-300);
         tape.rotateUp();
         telemetry.addData("Status","Placing marker");
         telemetry.update();
